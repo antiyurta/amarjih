@@ -1,19 +1,16 @@
-import { Form, Modal } from 'antd';
-import React, { useState, useEffect } from 'react';
+import { Form, Modal, Select } from 'antd';
+import React, { useState, useEffect, useCallback } from 'react';
 import moment from 'moment';
 import { Divider, Steps } from 'antd';
 
 // services
-import roomService from '@services/room';
-import userService from '@services/user';
 import columnService from '@services/column';
 import taskService from '@services/task';
 
 // components
 import Button from '@components/common/button';
 import UserIconRow from '@components/common/userRow';
-import { getColumn, getTypeInfo } from '@utils/util';
-import CustomSteps from '@components/common/step';
+import { taskTypes } from '@utils/static-data';
 
 interface Response {
   response: any;
@@ -27,53 +24,22 @@ export default function ColumnChangeModal(props) {
   const [users, setUsers] = useState([]);
   const [task, setTask] = useState(null);
   const [columns, setColumns] = useState([]);
-
   const [current, setCurrent] = useState(0);
+  const [columnId, setColumnId] = useState<number>();
 
   const onChange = (value: number) => {
     setCurrent(value);
   };
-
+  const onSelectColumn = (value: number) => {
+    setColumnId(value);
+  };
   useEffect(() => {
     getTask();
   }, []);
 
-  // useEffect(() => {
-  //   const currentIndex = columns.findIndex(column => column.id === task.currentColumn?.column.id);
-  //   console.log('columns', columns);
-  //   if (currentIndex !== -1) {
-  //     setCurrent(currentIndex);
-  //   } else {
-  //     setCurrent(0);
-  //   }
-  //   const tempColumns = [];
-  //   columns.map((col, ind) => {
-  //     if (currentIndex + 1 < ind && currentIndex < 4) {
-  //       Object.assign(col, { disabled: true });
-  //     }
-  //     tempColumns.push(col);
-  //   });
-  //   setColumns(tempColumns);
-  // }, [task]);
-
-  const getTask = async () => {
-    const result: any = await taskService.getOne(props.itemId);
-    setTask(result.response);
-    getColumns(result.response);
-  };
-
-  const getColumns = async (task: any) => {
-    const columns = getColumn(task.type)
-      .filter(item => item.isContextMenu)
-      .map(item => {
-        return {
-          id: item.id,
-          title: item.columnName,
-          description: item.isCheckRequired ? 'required' : 'direct',
-          isCheckRequired: item.isCheckRequired,
-        };
-      });
-    const currentIndex = columns.findIndex(column => column.id === task.currentColumn?.column.id);
+  useEffect(() => {
+    getColumns();
+    const currentIndex = columns.findIndex(column => column.id === task.currentColumn?.id);
     if (currentIndex !== -1) {
       setCurrent(currentIndex);
     } else {
@@ -87,9 +53,26 @@ export default function ColumnChangeModal(props) {
       tempColumns.push(col);
     });
     setColumns(tempColumns);
+  }, [task]);
 
-    // const result: any = await columnService.getList({ taskType: 1 });
-    // const stepItems = result.response?.data
+  const getTask = async () => {
+    const result: any = await taskService.getOne(props.itemId);
+    setTask(result.response);
+  };
+  const getColumns = async () => {
+    const result: any = await columnService.getList({
+      taskType: task?.type,
+      columnId: task?.currentColumn?.columnId,
+    });
+    const stepItems = result.response.map(item => {
+      return {
+        id: item.id,
+        title: item.columnName,
+        description: item.isCheckRequired ? 'required' : 'direct',
+        isCheckRequired: item.isCheckRequired,
+      };
+    });
+    setColumns(stepItems);
   };
 
   const onFinish = async values => {
@@ -152,7 +135,7 @@ export default function ColumnChangeModal(props) {
                 <div className="flex flex-row justify-start items-center py-1">
                   <div className="text-sm w-40">Төрөл</div>
                   <div className="text-sm font-bold">
-                    {getTypeInfo(task?.type || 2)}
+                    <Select disabled options={taskTypes} value={task?.type} />
                     {/* {task?.type === 2 ? 'Яаралтай' : 'Төлөвлөгөөт'} */}
                   </div>
                 </div>
@@ -228,46 +211,21 @@ export default function ColumnChangeModal(props) {
             </div>
             <Divider type="vertical" style={{ height: 500 }} />
             <div className="p-4">
-              <CustomSteps
-                columns={[
-                  {
-                    id: 1,
-                    parentId: null,
-                    name: 'Эрэмбэлэлт хийгдэж байна',
-                  },
-                  {
-                    id: 2,
-                    parentId: null,
-                    name: 'Эмчийн үзлэг хийгдэж байна',
-                  },
-                  {
-                    id: 3,
-                    parentId: 2,
-                    name: 'Хяналт хийгдэж байна',
-                  },
-                  {
-                    id: 7,
-                    parentId: 3,
-                    name: 'Эмчийн үзлэг хийгдэж байна',
-                  },
-                  {
-                    id: 4,
-                    parentId: 2,
-                    name: 'Яаралтай кесаров хагалгаагаар төрөх',
-                  },
-                  {
-                    id: 5,
-                    parentId: 4,
-                    name: 'Хагалгааны өмнөх өрөө',
-                  },
-                  {
-                    id: 6,
-                    parentId: 2,
-                    name: 'Эрсдэлтэй жирэмсний эмгэгийг эмчлэх тасаг',
-                  },
-                ]}
+              <Steps
+                current={current}
+                onChange={onChange}
+                direction="vertical"
+                items={task?.taskColumnsRels?.map(({ column }) => ({
+                  id: column?.id,
+                  title: column?.columnName,
+                  description: column.isCheckRequired ? 'required' : 'direct',
+                }))}
               />
-              <Steps current={current} onChange={onChange} direction="vertical" items={columns} />
+              <div>Баганын дугаар {columnId}</div>
+              <Select
+                options={columns.map(item => ({ value: item.id, label: item.title }))}
+                onChange={onSelectColumn}
+              />
             </div>
           </div>
         </Form>

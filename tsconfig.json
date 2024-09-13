@@ -1,7 +1,13 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "lib": ["es5", "es6", "dom", "dom.iterable", "esnext"],
+    "lib": [
+      "es5",
+      "es6",
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -15,27 +21,66 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@styles/*": ["./src/styles/*"],
-      "@components/*": ["./src/components/*"],
-      "@api/*": ["./src/api/*"],
-      "@models/*": ["./src/models/*"],
-      "@lib/*": ["./src/lib/*"],
-      "@hooks/*": ["./src/hooks/*"],
-      "@services/*": ["./src/services/*"],
-      "@constants": ["./src/constants.ts"],
-      "@context/*": ["./src/context/*"],
-      "@datas/*": ["./src/datas/*"],
-      "@typeDefs/*": ["./src/types/*"],
-      "@generated/*": ["./src/generated/*"],
-      "@public/*": ["./public/*"],
-      "@config/*": ["./config/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@app/*": ["./src/app/*"],
-      "@assets/*": ["./src/assets/*"],
-      "@helpers/*": ["./src/helpers/*"]
-    }
+      "@styles/*": [
+        "./src/styles/*"
+      ],
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@api/*": [
+        "./src/api/*"
+      ],
+      "@models/*": [
+        "./src/models/*"
+      ],
+      "@lib/*": [
+        "./src/lib/*"
+      ],
+      "@hooks/*": [
+        "./src/hooks/*"
+      ],
+      "@services/*": [
+        "./src/services/*"
+      ],
+      "@constants": [
+        "./src/constants.ts"
+      ],
+      "@context/*": [
+        "./src/context/*"
+      ],
+      "@datas/*": [
+        "./src/datas/*"
+      ],
+      "@typeDefs/*": [
+        "./src/types/*"
+      ],
+      "@generated/*": [
+        "./src/generated/*"
+      ],
+      "@public/*": [
+        "./public/*"
+      ],
+      "@config/*": [
+        "./config/*"
+      ],
+      "@utils/*": [
+        "./src/utils/*"
+      ],
+      "@app/*": [
+        "./src/app/*"
+      ],
+      "@assets/*": [
+        "./src/assets/*"
+      ],
+      "@helpers/*": [
+        "./src/helpers/*"
+      ]
+    },
+    "incremental": true
   },
-  "exclude": ["node_modules"],
+  "exclude": [
+    "node_modules"
+  ],
   "include": [
     "**/*.ts",
     "**/*.tsx",

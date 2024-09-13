@@ -43,7 +43,7 @@ import directoryService from '@services/directory';
 import { useAuthState } from '@context/auth';
 
 import styles from './tasks.module.css';
-import { getTypeInfo } from '@utils/util';
+import { taskTypes } from '@utils/static-data';
 
 const { Header, Sider, Content } = Layout;
 
@@ -133,7 +133,9 @@ const Surgery = () => {
       title: 'Тасгийн төрөл',
       dataIndex: 'type',
       key: 'type',
-      render: type => <Tag color="rgb(182 207 243)">{getTypeInfo(type)}</Tag>,
+      render: type => (
+        <Tag color="rgb(182 207 243)">{taskTypes.find(item => item.value == type)?.label}</Tag>
+      ),
       // render: type => (
       //   <div>
       //     {type === 1 ? (
