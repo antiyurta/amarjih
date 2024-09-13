@@ -1,0 +1,91 @@
+# variables:
+#   PROJECT_NAME: busbookingfront
+
+# stages:
+#   - build
+#   - deploy_staging
+#   - deploy_prod
+
+# build:
+#   image: node:14.18.1
+#   cache:
+#     key:
+#       files:
+#         - package.json
+#     paths:
+#       - node_modules/
+#   stage: build
+#   script:
+#     - apt install unzip
+#     - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+#     - unzip awscliv2.zip
+#     - ./aws/install
+#     # - npm install
+#     - if [ ! -d "node_modules" ]; then npm install; fi
+#     - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+#     - aws s3 cp s3://bitbucket-bus-pipeline/bus-staging .env
+#     # - npm run jest
+#     - npm run build
+
+# deploy_staging:
+#   image: node:14.18.1
+#   cache:
+#     key:
+#       files:
+#         - package.json
+#     paths:
+#       - node_modules/
+#   stage: deploy_staging
+#   environment:
+#     name: staging
+#   script:
+#     - apt install unzip
+#     - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+#     - unzip awscliv2.zip
+#     - ./aws/install
+#     # - npm install
+#     - if [ ! -d "node_modules" ]; then npm install; fi
+#     - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+#     - aws s3 cp s3://bitbucket-bus-pipeline/bus-staging .env
+#     - npm -g config set user root
+#     - npm install -g serverless@2
+#     - serverless config credentials --provider aws
+#     - serverless
+#   dependencies:
+#     - build
+#   only:
+#     - develop
+#     - master
+
+# deploy_prod:
+#   when: manual
+#   image: node:14.18.1
+#   cache:
+#     key:
+#       files:
+#         - package.json
+#     paths:
+#       - node_modules/
+#   stage: deploy_prod
+#   environment:
+#     name: production
+#   script:
+#     - apt install unzip
+#     - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+#     - unzip awscliv2.zip
+#     - ./aws/install
+#     # - npm install
+#     - if [ ! -d "node_modules" ]; then npm install; fi
+#     - if [ "$REPLACE_SERVERLESS" == true ]; then rm -rf .serverless; mv .serverless_prod .serverless; fi
+#     - sed -i "s/'bus-staging.tapatrip.com'/'bus.tapatrip.com', 'train.tapatrip.com'/g" serverless.yml
+#     - cat serverless.yml
+#     - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+#     - aws s3 cp s3://bitbucket-bus-pipeline/bus-prod .env
+#     - npm -g config set user root
+#     - npm install -g serverless@2
+#     - serverless config credentials --provider aws
+#     - serverless
+#   dependencies:
+#     - deploy_staging
+#   only:
+#     - master

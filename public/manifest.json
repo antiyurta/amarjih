@@ -1,0 +1,13 @@
+{
+  "name": "work2",
+  "short_name": "work2",
+  "start_url": "/",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/favicon-32x32.png",
+      "type": "image/png",
+      "sizes": "72x72"
+    }
+  ]
+}

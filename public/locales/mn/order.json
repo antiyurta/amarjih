@@ -1,0 +1,15 @@
+{
+    "errorTitle":"Алдаа гарлаа",
+    "errorContentTitle":"Автобусны суудал хоосон байна",
+    "warningTripInformation":"Энэ өдөр зорчих автобус байхгүй байгаа тул таньд дараах өдрүүдийн аяллыг санал болгож байна",
+    "warningTripInformation1":"Энэ чиглэлд зорчих автобус байхгүй байна",
+    "ordersSearchResult": "Уучлаарай",
+    "ordersSearchResultBody": "Энэ хайлтад тохирох үр дүн олдсонгүй. Дахин оролдоно уу?",
+    "passengerPrice": "зорчигчийн үнэ",
+    "directionInformation": "Чиглэлийн мэдээлэл",
+    "orderButton": "Захиалах",
+    "insuranceCompany": "Даатгалын компани",
+    "orderHours":"цаг",
+    "orderMinutes":"минут",
+    "measurement":"КМ"
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "id": 0,
+    "head": "about",
+    "title": "aboutTapatrip",
+    "content": "aboutTapatripContent"
+  },
+  {
+    "id": 1,
+    "head": "term-condition",
+    "title": "termsConditions",
+    "content": "termsConditionsContent"
+  },
+  {
+    "id": 2,
+    "head": "privacy-policy",
+    "title": "privacyPolicy",
+    "content": "privacyPolicyContent"
+  },
+  {
+    "id": 3,
+    "head": "faq",
+    "title": "faq",
+    "content": "faqContent"
+  }
+]

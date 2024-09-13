@@ -1,0 +1,13 @@
+{
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.format": "explicit"
+  },
+  "i18n-ally.localesPaths": [
+    "../../../../../projects/tapatrip/tapa-front-v2/bus-booking-front/public/ locales"
+  ],
+  "i18n-ally.keystyle": "nested"
+}

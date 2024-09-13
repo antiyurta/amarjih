@@ -1,0 +1,6 @@
+# busbookingfront:
+#   component: '@sls-next/serverless-component'
+#   inputs:
+#     cloudfront:
+#       aliases: ['bus-staging.tapatrip.com']
+#     timeout: 30

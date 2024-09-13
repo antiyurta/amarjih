@@ -1,0 +1,12 @@
+.rowdragging {
+  background: #fafafa;
+  border: 1px solid #ccc;
+}
+
+.rowdragging td {
+  padding: 16px;
+}
+
+.rowdragging .drag-visible {
+  visibility: visible;
+}

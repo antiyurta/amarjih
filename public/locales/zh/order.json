@@ -1,0 +1,15 @@
+{
+    "errorTitle":"發生錯誤",
+    "errorContentTitle":"巴士座位是空的",
+    "warningTripInformation":"这一天没有巴士，所以我们为您提供接下来的日子",
+    "warningTripInformation1": "这条路线上没有公交车",
+    "ordersSearchResult": "抱歉",
+    "ordersSearchResultBody": "未找到此搜索的结果。 请再试一次。",
+    "passengerPrice": "票价",
+    "directionInformation": "方向信息",
+    "orderButton": "命令",
+    "insuranceCompany": "保险公司",
+    "orderHours":"小时",
+    "orderMinutes":"分钟",
+    "measurement":"公里"
+}
