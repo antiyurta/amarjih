@@ -17,6 +17,7 @@ import DeleteIcon from '@components/common/icons/delete';
 
 // service
 import newsService from '@services/news';
+import Image from 'next/image';
 
 interface Response {
   response: any;
@@ -79,6 +80,13 @@ const News = () => {
   };
 
   const columns = [
+    {
+      title: 'Зураг',
+      dataIndex: 'path',
+      key: 'path',
+      width: 'auto',
+      render: path => (path ? <Image src={path} alt={''} width={100} height={100} /> : '?'),
+    },
     {
       title: 'Мэдээний агуулга',
       dataIndex: 'description',

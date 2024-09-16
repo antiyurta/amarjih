@@ -23,7 +23,7 @@ const setMenu = [
   {
     link: 'dashboard',
     icon: BarChartOutlined,
-    title: 'Хянах самбр',
+    title: 'Хянах самбар',
   },
   // {
   //   link: 'reports',

@@ -1,6 +1,6 @@
 import React, { useState, memo, useEffect, useContext, useRef } from 'react';
 import { useRouter } from 'next/router';
-import { Tag } from 'antd';
+import { Carousel, List, Tag } from 'antd';
 import { Pagination } from 'antd';
 
 import TextTransition, { presets } from 'react-text-transition';
@@ -26,6 +26,7 @@ import nameFormatter from '@utils/NameFomatter';
 
 // styled
 import ContentWrapper from './style';
+import SelectionImage from '@components/news/selectionImage';
 
 interface DoctorsType {
   id?: number;
@@ -88,9 +89,12 @@ const Dashboard = () => {
   const [today, setDate] = useState(moment());
   const [choosedNewsIndex, setChoosedNewsIndex] = useState(0);
   const [news, setNews] = useState([]);
+  const [isNews, setIsNews] = useState(false);
   const currentPageNumber = useRef(1);
   const totalPageCount = useRef(0);
   const pageRenderRowCount = 6;
+  const currentNewsPageNumber = useRef(1);
+  const totalNewsPageCount = useRef(0);
 
   const loadData = async () => {
     const result: any = await taskService.getStatList();
@@ -103,12 +107,9 @@ const Dashboard = () => {
   };
 
   const loadNewsData = () => {
-    const arr = [];
     newsService.getList('?page=1&limit=10').then((result: Response) => {
-      for (let i = 0; i < result?.response?.data?.length; i++) {
-        arr.push(result.response.data[i].description);
-      }
-      setNews(arr);
+      setNews(result?.response?.data);
+      totalNewsPageCount.current = result?.response?.meta?.itemCount;
       setChoosedNewsIndex(0);
     });
   };
@@ -261,48 +262,90 @@ const Dashboard = () => {
     //   ),
     // },
   ];
-
+  const newsColumns: ColumnsType<DataType> = [
+    {
+      title: <b>Агуулга</b>,
+      dataIndex: 'description',
+      key: 'description',
+      width: 'auto',
+    },
+    {
+      title: <b>Огноо</b>,
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      width: 150,
+      render: createdAt => {
+        return (
+          <div className="flex items-center">
+            <span className="text-sm">{moment(createdAt).format('YYYY-MM-DD HH:mm')}</span>
+          </div>
+        );
+      },
+    },
+  ];
   return (
     <MainLayout>
       <div className="h-screen p-2">
         <div className={`border rounded px-3 bg-input py-4 mb-3 flex justify-between items-center`}>
           <Logo />
           <div className="text-secondary text-lg font-bold">{today.format('YYYY/MM/DD')}</div>
-        </div>
-        <div className="text-xl h-20 font-bold  mt-4 mb-4 flex items-center">
-          <div className="bg-yellow w-1/12 h-20 rounded flex items-center justify-center">
-            <div className="text-white text-base">Мэдээлэл</div>
-          </div>
-          <div className="bg-white h-20 min-h-full w-11/12 flex items-center overflow-hidden text-xl">
-            {news.length && (
-              <div className="ml-5">
-                {news.length > 0 && (
-                  <TextTransition springConfig={presets.wobbly}>
-                    {news[choosedNewsIndex % news.length]}
-                  </TextTransition>
-                )}
-              </div>
-            )}
+          <div
+            className="bg-yellow w-1/12 h-10 rounded flex items-center justify-center cursor-pointer"
+            onClick={() => setIsNews(!isNews)}
+          >
+            <div className="text-white text-base">{isNews ? 'Мэдээлэл' : 'Бүртгэл'}</div>
           </div>
         </div>
-        <div>
-          <ContentWrapper>
-            <Table
-              columns={columns}
-              dataSource={tasks}
-              rowKey="id"
-              pagination={{
-                total: tasks?.length,
-                current: currentPageNumber.current,
-                defaultPageSize: pageRenderRowCount,
-              }}
-              locale={{ emptyText: 'Жагсаалтын цонх хоосон байна.' }}
-              rowClassName={(record, index) =>
-                index % 2 === 0 ? 'table-row-light' : 'table-row-dark'
-              }
-            />
-          </ContentWrapper>
-        </div>
+        {isNews ? (
+          <div className="flex gap-1 w-full h-full">
+            <div className="w-6/12 h-full">
+              <Carousel autoplay autoplaySpeed={3000}>
+                {news.map((item, key) => (
+                  <div key={key} className="h-3/4 bg-gray-700">
+                    <SelectionImage path={item?.path} title={item?.description} isSelect={false} />
+                  </div>
+                ))}
+              </Carousel>
+            </div>
+            <div className="w-6/12 h-full">
+              <ContentWrapper>
+                <Table
+                  columns={newsColumns}
+                  dataSource={news}
+                  rowKey={'id'}
+                  locale={{ emptyText: 'Жагсаалтын цонх хоосон байна.' }}
+                  rowClassName={(record, index) =>
+                    index % 2 === 0 ? 'table-row-light' : 'table-row-dark'
+                  }
+                  pagination={{
+                    total: totalNewsPageCount.current,
+                    current: currentNewsPageNumber.current,
+                    defaultPageSize: pageRenderRowCount,
+                  }}
+                />
+              </ContentWrapper>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <ContentWrapper>
+              <Table
+                columns={columns}
+                dataSource={tasks}
+                rowKey="id"
+                pagination={{
+                  total: tasks?.length,
+                  current: currentPageNumber.current,
+                  defaultPageSize: pageRenderRowCount,
+                }}
+                locale={{ emptyText: 'Жагсаалтын цонх хоосон байна.' }}
+                rowClassName={(record, index) =>
+                  index % 2 === 0 ? 'table-row-light' : 'table-row-dark'
+                }
+              />
+            </ContentWrapper>
+          </div>
+        )}
       </div>
     </MainLayout>
   );
