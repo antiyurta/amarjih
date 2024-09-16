@@ -20,6 +20,7 @@ import SurgeryBox from './surgeryBox';
 
 // context
 import { useAuthState } from '@context/auth';
+import { taskTypes } from '@utils/static-data';
 
 interface Response {
   response: any;
@@ -37,26 +38,6 @@ export default function TaskModal(props) {
   const { isAuthenticated, setLogout, user } = useAuthState();
   const companyId = user.response.companyId * 1;
   const depId = user.response.depId;
-
-  const departmentTypes = [
-    {
-      id: 2,
-      name: 'Хүлээн авах',
-    },
-    {
-      id: 4,
-      name: 'Төрөх тасаг',
-    },
-    {
-      id: 5,
-      name: 'Кесоров хагалгаагаар төрөх',
-    },
-    ,
-    {
-      id: 6,
-      name: 'Эмэгтэйчүүдийн хагалгаа',
-    },
-  ];
 
   const surgeryTypes = [
     {
@@ -106,7 +87,7 @@ export default function TaskModal(props) {
 
   const [diagnoseId, setDiagnoseId] = useState(0);
   const [diagnoseName, setDiagnoseName] = useState('');
-  const [type, setSurgeryType] = useState(2);
+  const [type, setSurgeryType] = useState('2');
   const [isRepeat, setRepeatType] = useState(1);
 
   const [startDate, setStartDate] = useState(moment().format('YYYY-MM-DD'));
@@ -124,7 +105,7 @@ export default function TaskModal(props) {
   const initialItems = [
     { label: 'Үндсэн мэдээлэл', children: null, key: '1', closable: false },
     {
-      label: 'Мэс засал',
+      label: 'Бүртгэл',
       children: (
         <SurgeryBox
           number={1}
@@ -222,7 +203,7 @@ export default function TaskModal(props) {
       // for (let i = 0; i < workers.length; i++) {
       //   const newActiveKey = `newTab${i}`;
       //   editInitTabs.push({
-      //     label: 'Мэс засал',
+      //     label: 'Бүртгэл',
       //     children: (
       //       <SurgeryBox
       //         number={i + 1}
@@ -280,7 +261,7 @@ export default function TaskModal(props) {
     const newActiveKey = `newTab${newTabIndex.current++}`;
     const newPanes = [...items];
     newPanes.push({
-      label: 'Мэс засал',
+      label: 'Бүртгэл',
       children: (
         <SurgeryBox
           number={newTabIndex.current + 1}
@@ -444,7 +425,7 @@ export default function TaskModal(props) {
       }}
       title={
         <div className="font-bold text-xl">
-          {props.itemId > 0 ? 'МЭС ЗАСАЛ ЗАСАХ' : 'МЭС ЗАСАЛ НЭМЭХ'}
+          {props.itemId > 0 ? 'БҮРТГЭЛ ЗАСАХ' : 'БҮРТГЭЛ НЭМЭХ'}
         </div>
       }
       footer={
@@ -516,7 +497,7 @@ export default function TaskModal(props) {
                           label="Тасгийн төрөл"
                           // label="Мэс заслын төрөл"
                           // items={surgeryTypes}
-                          items={departmentTypes}
+                          items={taskTypes.map(item => ({ id: item.value, name: item.label }))}
                           value={type}
                           onChange={e => setSurgeryType(e)}
                         />

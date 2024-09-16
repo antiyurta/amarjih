@@ -263,7 +263,7 @@ const Settings = () => {
             </div>
             <div className="mb-2 w-32">
               <TextField
-                label="Мэс засал эхлэх цаг"
+                label="Бүртгэл эхлэх цаг"
                 value={company?.taskStartTime}
                 disabled={!editMode}
                 onChange={e => handleChangeCompanyInfo('taskStartTime', e)}

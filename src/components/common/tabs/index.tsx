@@ -3,7 +3,7 @@ import { Tabs } from 'antd';
 
 const initialItems = [
   { label: 'Үндсэн мэдээлэл', children: 'Content of Tab 1', key: '1' },
-  { label: 'Мэс засал', children: 'Content of Tab 2', key: '2' },
+  { label: 'Бүртгэл', children: 'Content of Tab 2', key: '2' },
 ];
 
 const CustomTab: React.FC = () => {
@@ -19,7 +19,7 @@ const CustomTab: React.FC = () => {
     const newActiveKey = `newTab${newTabIndex.current++}`;
     const newPanes = [...items];
     newPanes.push({
-      label: 'Мэс засал',
+      label: 'Бүртгэл',
       children: 'Content of new Tab',
       key: newActiveKey,
     });

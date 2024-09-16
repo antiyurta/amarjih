@@ -171,7 +171,7 @@ const Surgery = () => {
     //   },
     // },
     // {
-    //   title: 'Мэс засал',
+    //   title: 'Бүртгэл',
     //   dataIndex: 'surgery',
     //   key: 'surgery',
     //   render: (_, record: any) => {
@@ -212,14 +212,14 @@ const Surgery = () => {
     },
     {
       title: 'Төлөв',
-      dataIndex: 'currentColumn',
-      key: 'currentColumn',
-      render: current => {
+      dataIndex: 'column',
+      key: 'column',
+      render: column => {
         return (
           <div className="">
             <Tag
               className="py-1 px-4 w-fit"
-              color={current?.column.color}
+              color={column.color}
               style={{
                 borderRadius: 4,
                 textAlign: 'center',
@@ -227,7 +227,7 @@ const Surgery = () => {
                 fontWeight: 'bold',
               }}
             >
-              <div className="w-auto">{current?.column.name}</div>
+              <div className="w-auto">{column.name}</div>
             </Tag>
           </div>
         );
@@ -633,7 +633,7 @@ const Surgery = () => {
       /> */}
       <div className={`border rounded px-8 bg-input py-4 mb-3 flex justify-between items-center`}>
         <div className="flex justify-between items-center">
-          <div className="text-xl font-bold mr-5">Мэс заслууд</div>
+          <div className="text-xl font-bold mr-5">Бүртгэл</div>
           <div className="flex justify-between items-center">
             <div
               onClick={() => {

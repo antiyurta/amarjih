@@ -18,23 +18,28 @@ const setMenu = [
   {
     link: 'tasks',
     icon: CloudOutlined,
-    title: 'Мэс засал',
+    title: 'Бүртгэл',
   },
   {
-    link: 'reports',
+    link: 'dashboard',
     icon: BarChartOutlined,
-    title: 'Тайлан',
+    title: 'Хянах самбр',
   },
+  // {
+  //   link: 'reports',
+  //   icon: BarChartOutlined,
+  //   title: 'Тайлан',
+  // },
   {
     link: 'users',
     icon: UserOutlined,
     title: 'Хүний нөөц',
   },
-  {
-    link: 'customers',
-    icon: UserOutlined,
-    title: 'Үйлчлүүлэгчдийн бүртгэл',
-  },
+  // {
+  //   link: 'customers',
+  //   icon: UserOutlined,
+  //   title: 'Үйлчлүүлэгчдийн бүртгэл',
+  // },
   {
     link: 'settings',
     icon: ShopOutlined,

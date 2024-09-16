@@ -75,7 +75,7 @@ const TaskReport = props => {
         value: 0,
       },
     ];
-    const temp3 = [['Мэс засал', 'Үзүүлэлт', 'Хувь', 'Дундаж']];
+    const temp3 = [['Бүртгэл', 'Үзүүлэлт', 'Хувь', 'Дундаж']];
     await response.data.response.map((item, ind) => {
       temp3.push([
         item.name,
@@ -173,7 +173,7 @@ const TaskReport = props => {
             <div>
               <div className="font-bold text-xl text-left mb-3">Насны ангилалаар</div>
               <div className="mb-4 flex flex-row justify-center items-center">
-                <div className="mr-3">Мэс засал сонгох</div>
+                <div className="mr-3">Бүртгэл сонгох</div>
                 <Select
                   defaultValue={choosedDiagnoseId}
                   style={{ width: 320 }}

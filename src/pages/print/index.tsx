@@ -108,7 +108,7 @@ const Print = () => {
       },
     },
     {
-      title: 'Мэс засал',
+      title: 'Бүртгэл',
       dataIndex: 'surgery',
       key: 'surgery',
       render: (_, record: any) => {

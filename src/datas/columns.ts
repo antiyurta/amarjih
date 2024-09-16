@@ -41,7 +41,7 @@ const columns = [
   },
   {
     id: 13,
-    name: 'Мэс засал эхэлсэн',
+    name: 'Бүртгэл эхэлсэн',
   },
 ];
 export { columns };

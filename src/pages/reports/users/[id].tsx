@@ -62,7 +62,7 @@ const Report = () => {
 
   const getSurgeryCounts = async query => {
     const response: Response = await reportService.getTaskCount(query);
-    const temp3 = [['Мэс засал', 'Үзүүлэлт', 'Хувь', 'Дундаж']];
+    const temp3 = [['Бүртгэл', 'Үзүүлэлт', 'Хувь', 'Дундаж']];
     await response.data.response.map((item, ind) => {
       temp3.push([
         item.name,

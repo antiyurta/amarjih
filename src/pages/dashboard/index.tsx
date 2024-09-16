@@ -53,18 +53,18 @@ const DateCell = memo(
   ({ record, showTimer }: any) => {
     const cnt1 = useRef({});
     cnt1.current[record.firstName] = cnt1.current[record.firstName] || 0;
-    const startColumn = record.taskColumnsRels.filter(item => item.columnId === 4);
-    const endColumn = record.taskColumnsRels.filter(item => item.columnId === 5);
+    // const startColumn = record.taskColumnsRels.filter(item => item.columnId === 4);
+    // const endColumn = record.taskColumnsRels.filter(item => item.columnId === 5);
 
     let duration: any = '?';
-    if (startColumn.length > 0 && endColumn.length > 0) {
-      const datetime1 = moment(startColumn[0].createdAt);
-      const datetime2 = moment(endColumn[0].createdAt);
+    // if (startColumn.length > 0 && endColumn.length > 0) {
+    const datetime1 = moment(record?.createdAt);
+    // const datetime2 = moment(endColumn[0].createdAt);
 
-      let diff = datetime2.diff(datetime1);
+    // let diff = datetime2.diff(datetime1);
 
-      duration = moment.utc(diff).format('HH:mm');
-    }
+    // duration = moment.utc(diff).format('HH:mm');
+    // }
 
     return (
       <div className="flex flex-row items-center">
@@ -94,11 +94,7 @@ const Dashboard = () => {
 
   const loadData = async () => {
     const result: any = await taskService.getStatList();
-    setTasks(
-      result?.data?.response?.filter(
-        res => res.currentColumn?.columnId > 1 && res.currentColumn?.columnId < 14
-      )
-    );
+    setTasks(result?.data?.response);
     totalPageCount.current = Math.ceil(
       result?.data?.response?.filter(
         res => res.currentColumn?.columnId > 1 && res.currentColumn?.columnId < 14
@@ -150,29 +146,6 @@ const Dashboard = () => {
       render: position => <span className="font-bold">{position}</span>,
     },
     {
-      title: <b>Төлөв</b>,
-      dataIndex: 'currentColumn',
-      key: 'currentColumn',
-      render: current => {
-        return (
-          <div className="">
-            <Tag
-              className="py-1 px-4 w-fit"
-              color={current?.column.color}
-              style={{
-                borderRadius: 4,
-                textAlign: 'center',
-                fontSize: 12,
-                fontWeight: 'bold',
-              }}
-            >
-              <div className="w-auto">{current?.column.name}</div>
-            </Tag>
-          </div>
-        );
-      },
-    },
-    {
       title: <b>Овог/ Нэр</b>,
       dataIndex: 'firstName',
       key: 'firstName',
@@ -190,38 +163,61 @@ const Dashboard = () => {
       },
     },
     {
-      title: <b>Тасаг</b>,
-      dataIndex: 'surgery',
-      key: 'surgery',
-      render: (_, record: any) => {
+      title: <b>Төлөв</b>,
+      dataIndex: 'column',
+      key: 'column',
+      render: column => {
         return (
-          <div className="flex flex-wrap w-36">
-            <span className="spanRow text-sm">{record?.authorDep?.name}</span>
+          <div className="">
+            <Tag
+              className="py-1 px-4 w-fit"
+              color={column?.color}
+              style={{
+                borderRadius: 4,
+                textAlign: 'center',
+                fontSize: 12,
+                fontWeight: 'bold',
+              }}
+            >
+              <div className="w-auto">{column?.name}</div>
+            </Tag>
           </div>
         );
       },
     },
+    // {
+    //   title: <b>Тасаг</b>,
+    //   dataIndex: 'surgery',
+    //   key: 'surgery',
+    //   render: (_, record: any) => {
+    //     return (
+    //       <div className="flex flex-wrap w-36">
+    //         <span className="spanRow text-sm">{record?.authorDep?.name}</span>
+    //       </div>
+    //     );
+    //   },
+    // },
+    // {
+    //   title: <b>Мэдээгүйжүүлгийн эмч</b>,
+    //   dataIndex: 'surgery',
+    //   key: 'surgery',
+    //   render: (_, record: any) => {
+    //     return (
+    //       <div className="flex flex-col">
+    //         {record.taskDoctorRels.map(item => {
+    //           return (
+    //             <div className="mb-1 mr-3">
+    //               <UserIconRow data={item?.user} />
+    //               {/* <span className="spanRow text-sm">{`${item?.user?.firstName[0]}.${item?.user?.lastName}`}</span> */}
+    //             </div>
+    //           );
+    //         })}
+    //       </div>
+    //     );
+    //   },
+    // },
     {
-      title: <b>Мэдээгүйжүүлгийн эмч</b>,
-      dataIndex: 'surgery',
-      key: 'surgery',
-      render: (_, record: any) => {
-        return (
-          <div className="flex flex-col">
-            {record.taskDoctorRels.map(item => {
-              return (
-                <div className="mb-1 mr-3">
-                  <UserIconRow data={item?.user} />
-                  {/* <span className="spanRow text-sm">{`${item?.user?.firstName[0]}.${item?.user?.lastName}`}</span> */}
-                </div>
-              );
-            })}
-          </div>
-        );
-      },
-    },
-    {
-      title: <b>Мэс засал, эх барих, нярайн эмч</b>,
+      title: <b>Баг, бүрэлдхүүн</b>,
       dataIndex: 'surgery',
       key: 'surgery',
       render: (_, record: any) => {
@@ -231,23 +227,11 @@ const Dashboard = () => {
               <div className="flex flex-row justify-start items-center">
                 {record?.taskWorkers?.length > 0 && (
                   <div className="flex flex-col">
-                    <div className="mb-1 mr-3">
-                      <UserIconRow data={record.taskWorkers[0].operation} />
-                    </div>
-                    <div className="mb-1 mr-3">
-                      {record.taskWorkers[0].firstHelper ? (
-                        <UserIconRow data={record.taskWorkers[0].firstHelper} />
-                      ) : (
-                        ''
-                      )}
-                    </div>
-                    <div className="mb-1 mr-3">
-                      {record.taskWorkers[0].secondHelper ? (
-                        <UserIconRow data={record.taskWorkers[0].secondHelper} />
-                      ) : (
-                        ''
-                      )}
-                    </div>
+                    {(record?.taskWorkers || []).map((item, index) => (
+                      <div className="mb-1 mr-3" key={index}>
+                        <UserIconRow data={item.operation} />
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>
@@ -257,73 +241,25 @@ const Dashboard = () => {
       },
     },
     {
-      title: <b>Сувилагч</b>,
-      dataIndex: 'surgery',
-      key: 'surgery',
-      render: (_, record: any) => {
-        return (
-          <div className="flex flex-col">
-            {record.taskNurseRels.map(item => {
-              return (
-                <div className="mb-1 mr-3">
-                  <UserIconRow data={item?.user} />
-                </div>
-              );
-            })}
-          </div>
-        );
-      },
-    },
-    {
       title: <b>Эхэлсэн цаг</b>,
-      dataIndex: 'taskColumnsRels',
-      key: 'taskColumnsRels',
-      render: taskColumnsRels => {
-        const startColumn = taskColumnsRels.filter(item => item.columnId === 4);
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      render: createdAt => {
         return (
           <div className="flex items-center">
-            <span className="text-xl font-bold">
-              {startColumn.length ? moment(startColumn[0]?.createdAt).format('HH:mm') : '?'}
-            </span>
+            <span className="text-xl font-bold">{moment(createdAt).format('HH:mm')}</span>
           </div>
         );
       },
     },
-    {
-      title: <b>Дууссан цаг</b>,
-      dataIndex: 'taskColumnsRels',
-      key: 'taskColumnsRels',
-      render: taskColumnsRels => {
-        const endColumn = taskColumnsRels.filter(item => item.columnId === 5);
-        return (
-          <div className="flex items-center">
-            <span className="text-xl font-bold">
-              {endColumn.length ? moment(endColumn[0]?.createdAt).format('HH:mm') : '?'}
-            </span>
-          </div>
-        );
-      },
-    },
-    {
-      title: <b>Үргэлжилсэн хугацаа</b>,
-      dataIndex: 'durationTime',
-      key: 'durationTime',
-      render: (_, record: any) => (
-        <DateCell record={record} showTimer={record?.currentColumn?.columnId === 4} />
-      ),
-    },
-    {
-      title: <b>Өрөө</b>,
-      dataIndex: 'room',
-      key: 'room',
-      render: room => {
-        return (
-          <div className="flex items-center">
-            <span className="text-base font-bold">{room === null ? '-' : room.number}</span>
-          </div>
-        );
-      },
-    },
+    // {
+    //   title: <b>Үргэлжилсэн хугацаа</b>,
+    //   dataIndex: 'durationTime',
+    //   key: 'durationTime',
+    //   render: (_, record: any) => (
+    //     <DateCell record={record} showTimer={record?.currentColumn?.columnId === 4} />
+    //   ),
+    // },
   ];
 
   return (

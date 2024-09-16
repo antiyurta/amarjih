@@ -79,9 +79,7 @@ const RoomReport = props => {
           return (
             <div className="relative bg-input h-56 p-3 rounded-xl border flex justify-center flex-col">
               <div className="mb-1 text-2xl font-bold text-subtitle">№ {item.roomNumber}</div>
-              <div className="mb-1 text-sm font-bold text-subtitle">
-                Мэс засал: {item.taskCount}
-              </div>
+              <div className="mb-1 text-sm font-bold text-subtitle">Бүртгэл: {item.taskCount}</div>
               <div className="mb-1 text-sm font-bold text-subtitle">
                 Дундаж цаг: {(item.durationTime / 60).toFixed(2)}
               </div>

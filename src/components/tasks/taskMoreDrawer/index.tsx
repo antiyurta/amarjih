@@ -114,7 +114,7 @@ const TaskMoreDrawer: React.FC<Props> = ({ visible, datas, onClose }) => {
             return (
               <div key={index} className="flex flex-col mt-1 p-2">
                 <div className="flex flex-row justify-start items-center p-1">
-                  <div className="text-base w-40 font-bold">Мэс засал</div>
+                  <div className="text-base w-40 font-bold">Бүртгэл</div>
                   <div className="text-sm font-bold">{work.surgery.name}</div>
                 </div>
                 <div className="p-1 flex flex-row justify-center items-center">

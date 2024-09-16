@@ -56,7 +56,7 @@ const Report = () => {
     },
     {
       key: '4',
-      label: `Мэс засал`,
+      label: `Бүртгэл`,
       children: <TaskReport />,
     },
     {
