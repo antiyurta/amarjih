@@ -12,8 +12,8 @@ const NewsService = {
     const response = await Client.delete(`/news/${id}`);
     return response;
   },
-  async getList(query) {
-    const response = await Client.get('/news', query);
+  async getList(params) {
+    const response = await Client.get('/news', { params });
     return response.data;
   },
 };

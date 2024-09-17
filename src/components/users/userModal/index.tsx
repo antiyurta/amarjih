@@ -66,10 +66,10 @@ export default function UserModal(props) {
   const [firstName, setFirstName] = useState(!isAddMode ? props.data.firstName : '');
   const [email, setEmail] = useState(!isAddMode ? props.data.email : '');
   const [phone, setPhone] = useState(!isAddMode ? props.data.phone : '');
-  const [role, setRole] = useState(!isAddMode ? props.data.role : '');
-  const [choosedDep, setChoosedDep] = useState(!isAddMode ? props.data.depId : 0);
-  const [choosedApp, setChoosedApp] = useState(!isAddMode ? props.data.appId : 0);
-  const [avatarId, setAvatarFileId] = useState(!isAddMode ? props.data.avatarId : 0);
+  const [role, setRole] = useState(!isAddMode ? props.data.role : 'nurse');
+  const [choosedDep, setChoosedDep] = useState(!isAddMode ? props.data.depId : null);
+  const [choosedApp, setChoosedApp] = useState(!isAddMode ? props.data.appId : null);
+  const [avatarId, setAvatarFileId] = useState(!isAddMode ? props.data.avatarId : undefined);
   const [userStatus, setUserStatus] = useState(!isAddMode ? props.data.status : 1);
   const [userRoles, setUserRoles] = useState(!isAddMode ? props.data.userRoles : []);
 
@@ -82,30 +82,17 @@ export default function UserModal(props) {
   }, []);
 
   useEffect(() => {
-    structureService
-      .getList(`?page=1&limit=30&type=2&parentId=${choosedDep}`)
-      .then((result: Response) => {
-        setApps(result.response?.data);
-      });
+    if (choosedDep !== null)
+      structureService
+        .getList(`?page=1&limit=30&type=2&parentId=${choosedDep}`)
+        .then((result: Response) => {
+          setApps(result.response?.data);
+        });
   }, [choosedDep]);
 
   const onFinish = async values => {
-    if (
-      lastName.length === 0 ||
-      firstName.length === 0 ||
-      email.length === 0 ||
-      phone.length === 0
-    ) {
+    if (lastName.length === 0 || firstName.length === 0) {
       message.error('Талбаруудыг бүрэн бөглөнө үү!');
-      return;
-    } else if (choosedDep === 0) {
-      message.error('Тасаг сонгоно уу!');
-      return;
-    } else if (choosedApp === 0) {
-      message.error('Албан тушаал сонгоно уу!');
-      return;
-    } else if (avatarId === 0) {
-      message.error('Профайл зураг оруулна уу!');
       return;
     }
 

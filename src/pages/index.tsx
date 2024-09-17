@@ -19,7 +19,7 @@ import AuthTokenStorageService from '@services/AuthTokenStorageService';
 const Index = () => {
   const router = useRouter();
   const { setLogin, isAuthenticated, user } = useAuthState();
-  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState(null);
   const [buttonLoader, setButtonLoader] = useState(false);
@@ -35,8 +35,8 @@ const Index = () => {
     password: false,
   });
 
-  const handleEmailChange = async e => {
-    setEmail(e);
+  const handlePhoneChange = async e => {
+    setPhone(e);
   };
 
   const handlePasswordChange = async e => {
@@ -56,7 +56,7 @@ const Index = () => {
 
   const handleLogin = async values => {
     let isError = false;
-    if (email.length === 0) {
+    if (phone.length === 0) {
       isError = true;
       setInputErrors(prevState => ({
         show: true,
@@ -78,7 +78,7 @@ const Index = () => {
     try {
       setButtonLoader(true);
       const res: loginResponse = await AuthService.authenticate({
-        email,
+        phone,
         password,
       });
       if (res && res.success) {
@@ -114,21 +114,20 @@ const Index = () => {
             )}
             <div className="mb-5">
               <div className="flex justify-center mb-2">
-                <Image src={`/assets/images/icon.png`} alt="avatar" width={70} height={56} />
+                <Image src={`/assets/images/icon.jfif`} alt="avatar" width={70} height={56} />
               </div>
               <div className="text-xs font-bold mt-2 text-secondary text-center">
-                Налайх ЭМТ-ийн
-                <br /> хагалгаа, төлөвлөлтийн систем
+                Нийслэлийн Амгалан амаржих газар
               </div>
               <div className="mb-3 mt-4 w-56">
                 <TextField
                   width="w-64"
                   label="Нэвтрэх нэр"
-                  value={email}
-                  name="email"
+                  value={phone}
+                  name="phone"
                   error={errors.name}
                   errorMessage="Нэвтрэх нэрээ оруулна уу!"
-                  onChange={handleEmailChange}
+                  onChange={handlePhoneChange}
                 />
               </div>
               <div className="w-56 mb-4">

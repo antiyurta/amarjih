@@ -13,7 +13,7 @@ const Logo: FC<Props> = ({ logoPath }) => {
       <div className="mr-1">
         <Image src={logoPath} alt="avatar" width={53} height={44} />
       </div>
-      <div className="text-secondary font-bold ">Нийслэлийн Амгалан амаржих газар</div>
+      <div className="text-secondary font-bold text-2xl ">Нийслэлийн Амгалан амаржих газар</div>
     </div>
   );
 };

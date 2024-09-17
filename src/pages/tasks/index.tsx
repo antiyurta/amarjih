@@ -244,61 +244,54 @@ const Surgery = () => {
           {/* ) : ( */}
           {/* '' */}
           {/* )} */}
-          <Dropdown
-            menu={{
-              items: showMenu(record),
-            }}
-          >
-            <a>
-              <MoreOutlined style={{ fontSize: 18, color: 'gray' }} />
-            </a>
-          </Dropdown>
+          <a onClick={() => handleClickMenu(record.id, 'edit')}>Засах</a>
+          <a onClick={() => handleClickMenu(record.id, 'delete')}>Устгах</a>
         </Space>
       ),
     },
   ];
 
-  const showMenu = record => [
-    {
-      key: 'edit',
-      label: 'Засах',
-      icon: <FiEdit />,
-      onClick: () => handleClickMenu(record.id, 'edit'),
-    },
-    {
-      key: 'delete',
-      label: 'Устгах',
-      icon: <FiTrash2 />,
-      onClick: () => handleClickMenu(record.id, 'delete'),
-    },
-    {
-      key: 'update',
-      label: 'Мэдээлэл оруулах',
-      icon: <FiUserPlus />,
-      onClick: () => handleClickMenu(record.id, 'update'),
-    },
-    {
-      key: 'more',
-      label: 'Дэлгэрэнгүй',
-      icon: <FiEdit />,
-      onClick: () => {
-        setSideBarShow(true);
-        setChoosedData(record);
-      },
-    },
-    {
-      key: 'cancel',
-      label: 'Цуцлах',
-      icon: <FiXCircle />,
-      onClick: () => handleClickMenu(record.id, 'cancel'),
-    },
-    // {
-    //   key: 'change_column',
-    //   label: 'Төлөв солих',
-    //   icon: <FiMenu />,
-    //   onClick: () => handleClickMenu(record.id, 'change_column'),
-    // },
-  ];
+  // const showMenu = record => [
+  //   {
+  //     key: 'edit',
+  //     label: 'Засах',
+  //     icon: <FiEdit />,
+  //     onClick: () => handleClickMenu(record.id, 'edit'),
+  //   },
+  //   {
+  //     key: 'delete',
+  //     label: 'Устгах',
+  //     icon: <FiTrash2 />,
+  //     onClick: () => handleClickMenu(record.id, 'delete'),
+  //   },
+  //   {
+  //     key: 'update',
+  //     label: 'Мэдээлэл оруулах',
+  //     icon: <FiUserPlus />,
+  //     onClick: () => handleClickMenu(record.id, 'update'),
+  //   },
+  //   {
+  //     key: 'more',
+  //     label: 'Дэлгэрэнгүй',
+  //     icon: <FiEdit />,
+  //     onClick: () => {
+  //       setSideBarShow(true);
+  //       setChoosedData(record);
+  //     },
+  //   },
+  //   {
+  //     key: 'cancel',
+  //     label: 'Цуцлах',
+  //     icon: <FiXCircle />,
+  //     onClick: () => handleClickMenu(record.id, 'cancel'),
+  //   },
+  //   {
+  //     key: 'change_column',
+  //     label: 'Төлөв солих',
+  //     icon: <FiMenu />,
+  //     onClick: () => handleClickMenu(record.id, 'change_column'),
+  //   },
+  // ];
 
   useEffect(() => {
     if (!user) return;
@@ -737,9 +730,9 @@ const Surgery = () => {
               />
             </div>
           )}
-          <div className="ml-2">
+          {/* <div className="ml-2">
             <Button name="Хэвлэх" onClick={handlePrint} />
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="md:container md:mx-auto">

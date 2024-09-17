@@ -26,7 +26,7 @@ import nameFormatter from '@utils/NameFomatter';
 
 // styled
 import ContentWrapper from './style';
-import SelectionImage from '@components/news/selectionImage';
+import SelectionImage from '@components/news/selectionImage/index';
 
 interface DoctorsType {
   id?: number;
@@ -88,6 +88,7 @@ const Dashboard = () => {
   const [tasks, setTasks] = useState([]);
   const [today, setDate] = useState(moment());
   const [choosedNewsIndex, setChoosedNewsIndex] = useState(0);
+  const [childNews, setChildNews] = useState([]);
   const [news, setNews] = useState([]);
   const [isNews, setIsNews] = useState(false);
   const currentPageNumber = useRef(1);
@@ -107,8 +108,15 @@ const Dashboard = () => {
   };
 
   const loadNewsData = () => {
-    newsService.getList('?page=1&limit=10').then((result: Response) => {
+    newsService.getList({ page: 1, limit: 10, type: 'normal' }).then((result: Response) => {
       setNews(result?.response?.data);
+      totalNewsPageCount.current = result?.response?.meta?.itemCount;
+      setChoosedNewsIndex(0);
+    });
+  };
+  const loadChildNewsData = () => {
+    newsService.getList({ page: 1, limit: 10, type: 'child' }).then((result: Response) => {
+      setChildNews(result?.response?.data);
       totalNewsPageCount.current = result?.response?.meta?.itemCount;
       setChoosedNewsIndex(0);
     });
@@ -117,6 +125,7 @@ const Dashboard = () => {
   useEffect(() => {
     loadData();
     loadNewsData();
+    loadChildNewsData();
     socket.on('dashboard', function (data) {
       console.log('socket.on dashboard');
       loadData();
@@ -153,12 +162,8 @@ const Dashboard = () => {
       render: (_, record: any) => {
         return (
           <div className="flex flex-row items-center">
-            <span className="spanRow text-sm text-black font-medium">
-              {nameFormatter(record.firstName)}
-            </span>
-            <span className="spanRow text-sm text-black font-medium ml-2">
-              {nameFormatter(record.lastName)}
-            </span>
+            <span className="spanRow  font-bold">{nameFormatter(record.firstName)}</span>
+            <span className="spanRow font-bold ml-2">{nameFormatter(record.lastName)}</span>
           </div>
         );
       },
@@ -176,7 +181,7 @@ const Dashboard = () => {
               style={{
                 borderRadius: 4,
                 textAlign: 'center',
-                fontSize: 12,
+                fontSize: 16,
                 fontWeight: 'bold',
               }}
             >
@@ -264,20 +269,14 @@ const Dashboard = () => {
   ];
   const newsColumns: ColumnsType<DataType> = [
     {
-      title: <b>Агуулга</b>,
+      title: <b>МЭДЭЭЛЭЛ</b>,
       dataIndex: 'description',
       key: 'description',
       width: 'auto',
-    },
-    {
-      title: <b>Огноо</b>,
-      dataIndex: 'createdAt',
-      key: 'createdAt',
-      width: 150,
-      render: createdAt => {
+      render: description => {
         return (
           <div className="flex items-center">
-            <span className="text-sm">{moment(createdAt).format('YYYY-MM-DD HH:mm')}</span>
+            <span className="text-xl">{description}</span>
           </div>
         );
       },
@@ -288,26 +287,34 @@ const Dashboard = () => {
       <div className="h-screen p-2">
         <div className={`border rounded px-3 bg-input py-4 mb-3 flex justify-between items-center`}>
           <Logo />
-          <div className="text-secondary text-lg font-bold">{today.format('YYYY/MM/DD')}</div>
-          <div
-            className="bg-yellow w-1/12 h-10 rounded flex items-center justify-center cursor-pointer"
-            onClick={() => setIsNews(!isNews)}
-          >
-            <div className="text-white text-base">{isNews ? 'Мэдээлэл' : 'Бүртгэл'}</div>
+          <div className="text-secondary text-2xl font-bold">{today.format('YYYY/MM/DD')}</div>
+          <div className="w-2/12 flex gap-2 items-center justify-center p-2">
+            <div
+              className={`h-12 w-full rounded-lg flex items-center justify-center cursor-pointer transition-colors duration-300 hover:bg-blue-800 ${!isNews ? 'bg-blue-800' : 'bg-slate-400 '}`}
+              onClick={() => setIsNews(false)}
+            >
+              <div className="text-white text-lg font-medium">Бүртгэл</div>
+            </div>
+            <div
+              className={`h-12 w-full rounded-lg flex items-center justify-center cursor-pointer transition-colors duration-300 hover:bg-blue-800 ${isNews ? 'bg-blue-800' : 'bg-slate-400 '}`}
+              onClick={() => setIsNews(true)}
+            >
+              <div className="text-white text-lg font-medium">Зар мэдээ</div>
+            </div>
           </div>
         </div>
         {isNews ? (
           <div className="flex gap-1 w-full h-full">
             <div className="w-6/12 h-full">
-              <Carousel autoplay autoplaySpeed={3000}>
-                {news.map((item, key) => (
-                  <div key={key} className="h-3/4 bg-gray-700">
+              <Carousel autoplay autoplaySpeed={20000}>
+                {childNews.map((item, key) => (
+                  <div key={key} className="h-3/4">
                     <SelectionImage path={item?.path} title={item?.description} isSelect={false} />
                   </div>
                 ))}
               </Carousel>
             </div>
-            <div className="w-6/12 h-full">
+            <div className="w-6/12 h-full my-10 -ml-10">
               <ContentWrapper>
                 <Table
                   columns={newsColumns}
@@ -339,9 +346,6 @@ const Dashboard = () => {
                   defaultPageSize: pageRenderRowCount,
                 }}
                 locale={{ emptyText: 'Жагсаалтын цонх хоосон байна.' }}
-                rowClassName={(record, index) =>
-                  index % 2 === 0 ? 'table-row-light' : 'table-row-dark'
-                }
               />
             </ContentWrapper>
           </div>

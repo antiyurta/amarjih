@@ -5,7 +5,7 @@ const ContentWrapper = styled.div`
     background-color: #ffffff;
   }
   .table-row-dark {
-      background-color: #fbfbfb;
+      background-color: #D8D8D8;
   }
   .ant-table-cell {
     font-weight: 500 !important;

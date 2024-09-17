@@ -25,11 +25,6 @@ const setMenu = [
     icon: BarChartOutlined,
     title: 'Хянах самбар',
   },
-  // {
-  //   link: 'reports',
-  //   icon: BarChartOutlined,
-  //   title: 'Тайлан',
-  // },
   {
     link: 'users',
     icon: UserOutlined,
@@ -51,6 +46,7 @@ const setMenu = [
     title: 'Мэдээлэл',
   },
 ];
+const nurseMenus = ['tasks', 'dashboard', 'news'];
 interface Props {
   children?: any;
 }
@@ -101,7 +97,7 @@ const MoreLayout: React.FC<Props> = ({ children }) => {
             <div className="flex flex-row justify-center items-center">
               <div className="flex justify-center mr-2">
                 <Image
-                  src={`/assets/images/icon.png`}
+                  src={`/assets/images/icon.jfif`}
                   alt="avatar"
                   width={46}
                   height={35}
@@ -110,23 +106,35 @@ const MoreLayout: React.FC<Props> = ({ children }) => {
               </div>
 
               <div className="text-xs font-bold mt-2 text-secondary text-left">
-                Налайх ЭМТ-ийн
-                <br /> хагалгаа, төлөвлөлтийн систем
+                Нийслэлийн Амгалан амаржих газар
               </div>
             </div>
             <Divider dashed />
             <div>
               <Profile {...user.response} />
-              {menus.map((item, ind) => {
-                return (
-                  <MenuButton
-                    key={ind}
-                    {...item}
-                    choosed={`/${item.link}` === choosedMenu}
-                    onClick={() => handleMenuClick(item.link)}
-                  />
-                );
-              })}
+              {user?.response?.role == 'admin'
+                ? menus.map((item, ind) => {
+                    return (
+                      <MenuButton
+                        key={ind}
+                        {...item}
+                        choosed={`/${item.link}` === choosedMenu}
+                        onClick={() => handleMenuClick(item.link)}
+                      />
+                    );
+                  })
+                : menus
+                    .filter(item => nurseMenus.includes(item.link))
+                    .map((item, ind) => {
+                      return (
+                        <MenuButton
+                          key={ind}
+                          {...item}
+                          choosed={`/${item.link}` === choosedMenu}
+                          onClick={() => handleMenuClick(item.link)}
+                        />
+                      );
+                    })}
             </div>
           </div>
           <div className="mb-2">

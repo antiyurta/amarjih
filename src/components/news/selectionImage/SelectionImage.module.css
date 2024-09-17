@@ -1,0 +1,21 @@
+.imageContainer {
+  position: relative;
+  width: 100%;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+}
+
+.overlayText {
+  position: absolute;
+  bottom: 70px; /* Adjust as needed */
+  left: 0;
+  right: 0;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5); /* Background to make text more readable */
+  padding: 5px;
+  text-align: center;
+  font-size: 36px;
+}
