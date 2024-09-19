@@ -97,20 +97,12 @@ const Surgery = () => {
   const [openNurseModal, setOpenNurseModal] = useState(false);
   const [openDeleteConfirmModal, setOpenDeleteConfirmModal] = useState(false);
   const [openAgreeConfirmModal, setOpenAgreeConfirmModal] = useState(false);
-  const [openTypeConfirmModal, setOpenTypeConfirmModal] = useState(false);
   const [openCancelModal, setOpenCancelModal] = useState(false);
   const [openPrintModal, setOpenPrintModal] = useState(false);
   const [openColumnModal, setOpenColumnModal] = useState(false);
 
   const [choosedData, setChoosedData] = useState(null);
   const [sideBarOpen, setSideBarShow] = useState(false);
-  const [showContextMenu, setContextMenu] = useState({
-    data: null,
-    visible: false,
-    x: 0,
-    y: 0,
-  });
-
   const [startDate, setStartDateFilter] = useState(moment().format('YYYY-MM-DD'));
 
   const columns: ColumnsType<DataType> = [

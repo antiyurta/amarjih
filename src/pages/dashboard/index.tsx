@@ -93,7 +93,7 @@ const Dashboard = () => {
   const [isNews, setIsNews] = useState(false);
   const currentPageNumber = useRef(1);
   const totalPageCount = useRef(0);
-  const pageRenderRowCount = 6;
+  const pageRenderRowCount = 30;
   const currentNewsPageNumber = useRef(1);
   const totalNewsPageCount = useRef(0);
 
@@ -223,7 +223,7 @@ const Dashboard = () => {
     //   },
     // },
     {
-      title: <b>Баг, бүрэлдхүүн</b>,
+      title: <b>Эмчийн баг бүрэлдэхүүн</b>,
       dataIndex: 'surgery',
       key: 'surgery',
       render: (_, record: any) => {
@@ -232,9 +232,9 @@ const Dashboard = () => {
             <div className="flex flex-row justify-start items-center">
               <div className="flex flex-row justify-start items-center">
                 {record?.taskWorkers?.length > 0 && (
-                  <div className="flex flex-col">
+                  <div className="grid grid-cols-3 gap-1">
                     {(record?.taskWorkers || []).map((item, index) => (
-                      <div className="mb-1 mr-3" key={index}>
+                      <div className="w-full" key={index}>
                         <UserIconRow data={item.operation} />
                       </div>
                     ))}
@@ -254,6 +254,18 @@ const Dashboard = () => {
         return (
           <div className="flex items-center">
             <span className="text-xl font-bold">{moment(createdAt).format('HH:mm')}</span>
+          </div>
+        );
+      },
+    },
+    {
+      title: <b>Дууссан цаг</b>,
+      dataIndex: 'updatedAt',
+      key: 'updatedAt',
+      render: updatedAt => {
+        return (
+          <div className="flex items-center">
+            <span className="text-xl font-bold">{moment(updatedAt).format('HH:mm')}</span>
           </div>
         );
       },

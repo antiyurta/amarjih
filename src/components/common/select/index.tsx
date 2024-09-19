@@ -35,7 +35,7 @@ const CustomSelect: FC<Props> = ({ label, items, width, value, onChange, onSearc
   return (
     <ContenWrapper>
       <div>
-        {label && <div className="block text-xs text-gray">{label}</div>}
+        {label && <div className="block text-sm text-black">{label}</div>}
         <Select
           showSearch
           className={`${width} bg-input text-black text-sm mt-1 text-left`}
