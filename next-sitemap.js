@@ -1,4 +1,4 @@
-yayarmodule.exports = {
+module.exports = {
   siteUrl: process.env.NEXT_PUBLIC_DEPLOYMENT_URL,
   changefreq: 'daily',
   priority: 0.7,

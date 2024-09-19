@@ -8,7 +8,7 @@
     "build": "set NODE_OPTIONS=--openssl-legacy-provider && next build",
     "deploy:local": "SET NODE_OPTIONS=--openssl-legacy-provider && next build && pm2 startOrRestart ecosystem.config.js --env local",
     "deploy:dev": "SET NODE_OPTIONS=--openssl-legacy-provider && next build && pm2 startOrRestart ecosystem.config.js --env development",
-    "deploy:prod": "SET NODE_OPTIONS=--openssl-legacy-provider && next build && pm2 startOrRestart ecosystem.config.js --env production",
+    "deploy:prod": "set NODE_OPTIONS=--openssl-legacy-provider && next build && pm2 startOrRestart ecosystem.config.js --env production",
     "postbuild": "NODE_ENV=production next-sitemap",
     "start": "SET NODE_OPTIONS=--openssl-legacy-provider && next start -p 3001",
     "type-check": "tsc --pretty --noEmit",
