@@ -43,7 +43,7 @@ const TextField: FC<Props> = ({
 
   return (
     <div>
-      {label && <div className="block text-xs text-gray">{label}</div>}
+      {label && <div className="block text-sm text-black">{label}</div>}
       <input
         type={type}
         name={name}
