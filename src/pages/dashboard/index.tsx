@@ -182,7 +182,7 @@ const Dashboard = () => {
                 fontWeight: 'bold',
               }}
             >
-              <div className="w-40">
+              <div className="w-80">
                 {task?.column?.name} {task?.room ? '- ' + task?.room?.name : ''}
               </div>
             </Tag>
