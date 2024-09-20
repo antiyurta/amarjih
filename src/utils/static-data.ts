@@ -4,3 +4,5 @@ export const taskTypes = [
   { value: '5', label: 'Кесоров хагалгаагаар төрөх' },
   { value: '6', label: 'Эмэгтэйчүүдийн хагалгаа' },
 ];
+export const getTaskByValue = (value): string =>
+  taskTypes.find(item => item.value == value).label ?? '';

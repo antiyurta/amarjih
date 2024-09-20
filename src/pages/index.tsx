@@ -114,10 +114,10 @@ const Index = () => {
             )}
             <div className="mb-5">
               <div className="flex justify-center mb-2">
-                <Image src={`/assets/images/icon.jfif`} alt="avatar" width={70} height={56} />
+                <Image src={`/assets/icon.png`} alt="avatar" width={70} height={56} />
               </div>
               <div className="text-xs font-bold mt-2 text-secondary text-center">
-                Нийслэлийн Амгалан амаржих газар
+                НИЙСЛЭЛИЙН АМГАЛАН АМАРЖИХ ГАЗАР
               </div>
               <div className="mb-3 mt-4 w-56">
                 <TextField

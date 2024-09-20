@@ -17,12 +17,12 @@ export default function AddModal(props) {
   const images = [
     { path: '/assets/images/children/female.png', title: 'Эмэгтэй' },
     { path: '/assets/images/children/male.png', title: 'Эрэгтэй' },
-    { path: '/assets/images/children/twin.png', title: 'Ихэр' },
+    { path: '/assets/images/children/twin.png', title: 'Хүү, охин ихэр' },
     { path: '/assets/images/children/twin-female.png', title: 'Эмэгтэй ихэр' },
     { path: '/assets/images/children/twin-male.png', title: 'Эрэгтэй ихэр' },
   ];
   const { user } = useAuthState();
-  const [type, setType] = useState('normal');
+  const [type, setType] = useState('child');
   const [description, setDescription] = useState('');
   const [current, setCurrent] = useState('');
   // const { closeLoadingModal, openLoadingModal, displayLoadingModal } = useUI();
@@ -66,6 +66,7 @@ export default function AddModal(props) {
         <Form name="addRoomModal" onFinish={onFinish}>
           <div className="mx-4">
             <Radio.Group
+              disabled
               options={options}
               value={type}
               optionType="button"
@@ -87,7 +88,12 @@ export default function AddModal(props) {
             </div>
           )}
           <div className="mx-4">
-            <TextArea label="Агуулга" value={description} onChange={e => setDescription(e)} />
+            <TextArea
+              width="w-full"
+              label="Агуулга"
+              value={description}
+              onChange={e => setDescription(e)}
+            />
           </div>
         </Form>
       </div>

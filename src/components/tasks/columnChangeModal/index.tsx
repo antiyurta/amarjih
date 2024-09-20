@@ -1,4 +1,4 @@
-import { Form, Modal, Select } from 'antd';
+import { Form, Modal, Radio, Select } from 'antd';
 import React, { useState, useEffect, useCallback } from 'react';
 import moment from 'moment';
 import { Divider, Steps } from 'antd';
@@ -12,6 +12,7 @@ import Button from '@components/common/button';
 import UserIconRow from '@components/common/userRow';
 import { taskTypes } from '@utils/static-data';
 import CustomSelect from '@components/common/select';
+import RoomService from '@services/room';
 
 interface Response {
   response: any;
@@ -28,6 +29,8 @@ export default function ColumnChangeModal(props) {
   const [currentColumns, setCurrentColumns] = useState([]);
   const [current, setCurrent] = useState(0);
   const [columnId, setColumnId] = useState<number>();
+  const [roomId, setRoomId] = useState();
+  const [rooms, setRooms] = useState([]);
 
   const onChange = (value: number) => {
     setCurrent(value);
@@ -44,7 +47,12 @@ export default function ColumnChangeModal(props) {
 
   useEffect(() => {
     getListColumns();
+    getRooms();
   }, [current, task?.type, columns]);
+
+  useEffect(() => {
+    getRooms();
+  }, [columnId]);
 
   const getTask = async () => {
     const result: any = await taskService.getOne(props.itemId);
@@ -80,6 +88,7 @@ export default function ColumnChangeModal(props) {
       companyId,
       columnId: columnId,
       taskId: task.id,
+      roomId: roomId,
       description: 'Төлөв солив',
     });
     onClose();
@@ -87,6 +96,14 @@ export default function ColumnChangeModal(props) {
 
   const onClose = () => {
     props.close();
+  };
+  const getRooms = async () => {
+    if (columnId) {
+      const result = await RoomService.getList({ columnId, limit: 50 });
+      if (result?.success) {
+        setRooms(result?.response?.data);
+      }
+    }
   };
 
   return (
@@ -219,6 +236,13 @@ export default function ColumnChangeModal(props) {
                 width="w-80"
                 onChange={setColumnId}
               />
+              <Radio.Group onChange={e => setRoomId(e.target.value)} value={roomId}>
+                {rooms.map(item => (
+                  <Radio key={item?.id} value={item?.id}>
+                    {item?.name}
+                  </Radio>
+                ))}
+              </Radio.Group>
             </div>
           </div>
         </Form>

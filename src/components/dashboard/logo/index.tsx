@@ -11,15 +11,15 @@ const Logo: FC<Props> = ({ logoPath }) => {
   return (
     <div className="flex flex-row justify-center items-center">
       <div className="mr-1">
-        <Image src={logoPath} alt="avatar" width={53} height={44} />
+        <Image src={logoPath} alt="avatar" width={80} height={44} />
       </div>
-      <div className="text-secondary font-bold text-2xl ">Нийслэлийн Амгалан амаржих газар</div>
+      <div className="text-secondary font-bold text-3xl ">НИЙСЛЭЛИЙН АМГАЛАН АМАРЖИХ ГАЗАР</div>
     </div>
   );
 };
 
 Logo.defaultProps = {
-  logoPath: '/assets/images/icon.jfif',
+  logoPath: '/assets/icon.png',
 };
 
 export default memo(Logo, (prev, next) => prev.logoPath === next.logoPath);

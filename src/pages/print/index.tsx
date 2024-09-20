@@ -220,13 +220,7 @@ const Print = () => {
       <div className="p-3 flex text-left items-center flex-col align-left">
         <div className="flex flex-row items-center">
           <div className="flex justify-center mr-2">
-            <Image
-              src={`/assets/images/icon.png`}
-              alt="avatar"
-              width={56}
-              height={45}
-              objectFit="cover"
-            />
+            <Image src={`/assets/icon.png`} alt="avatar" width={56} height={45} objectFit="cover" />
           </div>
           <div className="text-xl font-bold">Налайх ЭМТ-ийн</div>
         </div>

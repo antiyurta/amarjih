@@ -10,7 +10,7 @@ const UserIconRow: FC<Props> = ({ data }) => {
   console.log(data);
   return (
     <div className="flex flex-row items-center">
-      <div className="flex justify-center items-center rounded-full overflow-hidden border mr-3">
+      {/* <div className="flex justify-center items-center rounded-full overflow-hidden border mr-3">
         <Image
           src={`${process.env.BASE_API_URL}local-files/${data.avatarId}`}
           alt="avatar"
@@ -18,7 +18,7 @@ const UserIconRow: FC<Props> = ({ data }) => {
           height={22}
           objectFit="cover"
         />
-      </div>
+      </div> */}
       <div>
         <div className="text-gray-500">
           {data.lastName[0]}.{data.firstName}

@@ -56,7 +56,7 @@ const Settings = () => {
 
   useEffect(() => {
     if (choosedTab === '2')
-      roomService.getList('?companyId=1').then((result: Response) => {
+      roomService.getList({ companyId: 1 }).then((result: Response) => {
         setRooms(result?.response?.data);
       });
     else if (choosedTab === '1') {
@@ -279,6 +279,21 @@ const Settings = () => {
           </div>
         </TabPane>
         <TabPane tab="Цуцлах шалтгаан" key="4">
+          <div className=" grid grid-cols-7 gap-3 mb-5">
+            {descriptions &&
+              descriptions.length > 0 &&
+              descriptions.map(item => {
+                return (
+                  <DepCard
+                    {...item}
+                    onEdit={() => handleDescEditClick(item)}
+                    onDelete={() => onDeleteRoom(item.id)}
+                  />
+                );
+              })}
+          </div>
+        </TabPane>
+        <TabPane tab="Шилжих тасаг" key="5">
           <div className=" grid grid-cols-7 gap-3 mb-5">
             {descriptions &&
               descriptions.length > 0 &&

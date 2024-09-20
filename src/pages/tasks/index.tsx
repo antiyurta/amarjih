@@ -456,6 +456,7 @@ const Surgery = () => {
 
   const onChangeColumnId = async data => {
     const res: Response = await taskService.changeStatus(data.taskId, {
+      roomId: data?.roomId,
       columnId: data.columnId,
       description: 'Төлөв солигдлоо',
     });

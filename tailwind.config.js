@@ -48,7 +48,7 @@ module.exports = {
       }),
       textColor: {
         primary: '#636363',
-        secondary: '#076FCA',
+        secondary: '#0816b8',
         selected: '#177AD6',
         table: '#6A6A6A',
         gray: '#999999',

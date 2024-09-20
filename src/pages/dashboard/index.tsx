@@ -90,10 +90,9 @@ const Dashboard = () => {
   const [choosedNewsIndex, setChoosedNewsIndex] = useState(0);
   const [childNews, setChildNews] = useState([]);
   const [news, setNews] = useState([]);
-  const [isNews, setIsNews] = useState(false);
   const currentPageNumber = useRef(1);
   const totalPageCount = useRef(0);
-  const pageRenderRowCount = 30;
+  const pageRenderRowCount = 10;
   const currentNewsPageNumber = useRef(1);
   const totalNewsPageCount = useRef(0);
 
@@ -161,23 +160,21 @@ const Dashboard = () => {
       key: 'firstName',
       render: (_, record: any) => {
         return (
-          <div className="flex flex-row items-center">
-            <span className="spanRow  font-bold">{nameFormatter(record.firstName)}</span>
-            <span className="spanRow font-bold ml-2">{nameFormatter(record.lastName)}</span>
+          <div className="flex flex-col items-center">
+            <span className="spanRow  font-bold">{record.firstName}</span>
+            <span className="spanRow font-bold ml-2">{record.lastName}</span>
           </div>
         );
       },
     },
     {
       title: <b>Төлөв</b>,
-      dataIndex: 'column',
-      key: 'column',
-      render: column => {
+      render: task => {
         return (
           <div className="">
             <Tag
-              className="py-1 px-4 w-fit"
-              color={column?.color}
+              className="py-1 px-4 w-fit text-wrap"
+              color={task?.column?.color}
               style={{
                 borderRadius: 4,
                 textAlign: 'center',
@@ -185,45 +182,16 @@ const Dashboard = () => {
                 fontWeight: 'bold',
               }}
             >
-              <div className="w-auto">{column?.name}</div>
+              <div className="w-40">
+                {task?.column?.name} {task?.room ? '- ' + task?.room?.name : ''}
+              </div>
             </Tag>
           </div>
         );
       },
     },
-    // {
-    //   title: <b>Тасаг</b>,
-    //   dataIndex: 'surgery',
-    //   key: 'surgery',
-    //   render: (_, record: any) => {
-    //     return (
-    //       <div className="flex flex-wrap w-36">
-    //         <span className="spanRow text-sm">{record?.authorDep?.name}</span>
-    //       </div>
-    //     );
-    //   },
-    // },
-    // {
-    //   title: <b>Мэдээгүйжүүлгийн эмч</b>,
-    //   dataIndex: 'surgery',
-    //   key: 'surgery',
-    //   render: (_, record: any) => {
-    //     return (
-    //       <div className="flex flex-col">
-    //         {record.taskDoctorRels.map(item => {
-    //           return (
-    //             <div className="mb-1 mr-3">
-    //               <UserIconRow data={item?.user} />
-    //               {/* <span className="spanRow text-sm">{`${item?.user?.firstName[0]}.${item?.user?.lastName}`}</span> */}
-    //             </div>
-    //           );
-    //         })}
-    //       </div>
-    //     );
-    //   },
-    // },
     {
-      title: <b>Эмчийн баг бүрэлдэхүүн</b>,
+      title: <b>Тусламж үйлчилгээний баг</b>,
       dataIndex: 'surgery',
       key: 'surgery',
       render: (_, record: any) => {
@@ -232,7 +200,7 @@ const Dashboard = () => {
             <div className="flex flex-row justify-start items-center">
               <div className="flex flex-row justify-start items-center">
                 {record?.taskWorkers?.length > 0 && (
-                  <div className="grid grid-cols-3 gap-1">
+                  <div className="grid grid-cols-2 gap-1">
                     {(record?.taskWorkers || []).map((item, index) => (
                       <div className="w-full" key={index}>
                         <UserIconRow data={item.operation} />
@@ -250,6 +218,7 @@ const Dashboard = () => {
       title: <b>Эхэлсэн цаг</b>,
       dataIndex: 'createdAt',
       key: 'createdAt',
+      width: 50,
       render: createdAt => {
         return (
           <div className="flex items-center">
@@ -262,6 +231,7 @@ const Dashboard = () => {
       title: <b>Дууссан цаг</b>,
       dataIndex: 'updatedAt',
       key: 'updatedAt',
+      width: 50,
       render: updatedAt => {
         return (
           <div className="flex items-center">
@@ -300,53 +270,18 @@ const Dashboard = () => {
         <div className={`border rounded px-3 bg-input py-4 mb-3 flex justify-between items-center`}>
           <Logo />
           <div className="text-secondary text-2xl font-bold">{today.format('YYYY/MM/DD')}</div>
-          <div className="w-2/12 flex gap-2 items-center justify-center p-2">
-            <div
-              className={`h-12 w-full rounded-lg flex items-center justify-center cursor-pointer transition-colors duration-300 hover:bg-blue-800 ${!isNews ? 'bg-blue-800' : 'bg-slate-400 '}`}
-              onClick={() => setIsNews(false)}
-            >
-              <div className="text-white text-lg font-medium">Бүртгэл</div>
-            </div>
-            <div
-              className={`h-12 w-full rounded-lg flex items-center justify-center cursor-pointer transition-colors duration-300 hover:bg-blue-800 ${isNews ? 'bg-blue-800' : 'bg-slate-400 '}`}
-              onClick={() => setIsNews(true)}
-            >
-              <div className="text-white text-lg font-medium">Зар мэдээ</div>
-            </div>
-          </div>
         </div>
-        {isNews ? (
-          <div className="flex gap-1 w-full h-full">
-            <div className="w-6/12 h-full">
-              <Carousel autoplay autoplaySpeed={20000}>
-                {childNews.map((item, key) => (
-                  <div key={key} className="h-3/4">
-                    <SelectionImage path={item?.path} title={item?.description} isSelect={false} />
-                  </div>
-                ))}
-              </Carousel>
-            </div>
-            <div className="w-6/12 h-full my-10 -ml-10">
-              <ContentWrapper>
-                <Table
-                  columns={newsColumns}
-                  dataSource={news}
-                  rowKey={'id'}
-                  locale={{ emptyText: 'Жагсаалтын цонх хоосон байна.' }}
-                  rowClassName={(record, index) =>
-                    index % 2 === 0 ? 'table-row-light' : 'table-row-dark'
-                  }
-                  pagination={{
-                    total: totalNewsPageCount.current,
-                    current: currentNewsPageNumber.current,
-                    defaultPageSize: pageRenderRowCount,
-                  }}
-                />
-              </ContentWrapper>
-            </div>
+        <div className="flex gap-1 w-full h-full">
+          <div className="w-5/12 h-full">
+            <Carousel autoplay autoplaySpeed={10000}>
+              {childNews.map((item, key) => (
+                <div key={key} className="h-3/4">
+                  <SelectionImage path={item?.path} title={item?.description} isSelect={false} />
+                </div>
+              ))}
+            </Carousel>
           </div>
-        ) : (
-          <div>
+          <div className="w-7/12 h-full -ml-10">
             <ContentWrapper>
               <Table
                 columns={columns}
@@ -361,7 +296,7 @@ const Dashboard = () => {
               />
             </ContentWrapper>
           </div>
-        )}
+        </div>
       </div>
     </MainLayout>
   );

@@ -10,15 +10,7 @@ interface Props {
   onChange?: Function;
 }
 
-const TextArea: FC<Props> = ({
-  id,
-  label,
-  name,
-  type,
-  value,
-  width,
-  onChange,
-}) => {
+const TextArea: FC<Props> = ({ id, label, name, type, value, width, onChange }) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleChange = (e: { target: { value: any } }) => {
@@ -27,14 +19,11 @@ const TextArea: FC<Props> = ({
 
   return (
     <div>
-      {label && (
-        <label className="block text-sm font-medium text-label">{label}</label>
-      )}
+      {label && <label className="block text-sm font-medium text-black">{label}</label>}
       <textarea
         id="area"
         rows={4}
-        className={`${width} bg-input border text-input border-input border-input mt-1 p-1 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm text-xs rounded`}
-        // placeholder={label}
+        className={`${width} bg-input border text-black border-input mt-1 p-1 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm rounded text-xl`}
         onChange={handleChange}
         value={value}
       ></textarea>
@@ -43,7 +32,7 @@ const TextArea: FC<Props> = ({
 };
 
 TextArea.defaultProps = {
-  width: 'w-80',
+  width: 'w-full',
   label: 'Гарчиг',
   onChange: () => {},
 };

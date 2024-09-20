@@ -12,8 +12,8 @@ const RoomService = {
     const response = await Client.delete(`/rooms/${payload}`);
     return response;
   },
-  async getList(query) {
-    const response = await Client.get(`/rooms${query}`);
+  async getList(params) {
+    const response = await Client.get('/rooms', { params });
     return response.data;
   },
 };

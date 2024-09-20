@@ -97,7 +97,7 @@ const MoreLayout: React.FC<Props> = ({ children }) => {
             <div className="flex flex-row justify-center items-center">
               <div className="flex justify-center mr-2">
                 <Image
-                  src={`/assets/images/icon.jfif`}
+                  src={`/assets/icon.png`}
                   alt="avatar"
                   width={46}
                   height={35}
@@ -106,7 +106,7 @@ const MoreLayout: React.FC<Props> = ({ children }) => {
               </div>
 
               <div className="text-xs font-bold mt-2 text-secondary text-left">
-                Нийслэлийн Амгалан амаржих газар
+                НИЙСЛЭЛИЙН АМГАЛАН АМАРЖИХ ГАЗАР
               </div>
             </div>
             <Divider dashed />
