@@ -260,17 +260,18 @@ const Dashboard = () => {
           <Logo />
           <div className="text-secondary text-3xl font-bold">{today.format('YYYY/MM/DD')}</div>
         </div>
-        <div className="flex gap-1 w-full h-full">
-          <div className="w-5/12 h-full">
-            <Carousel autoplay autoplaySpeed={10000}>
+        <div className="flex flex-row gap-2 w-full">
+          <div className="w-1/3 h-full">
+            {/* autoplay autoplaySpeed={10000} */}
+            <Carousel>
               {childNews.map((item, key) => (
-                <div key={key} className="h-3/4">
+                <div key={key}>
                   <SelectionImage path={item?.path} title={item?.description} isSelect={false} />
                 </div>
               ))}
             </Carousel>
           </div>
-          <div className="w-7/12 h-full -ml-10">
+          <div className="w-2/3">
             <ContentWrapper>
               <Table
                 columns={columns}
