@@ -100,7 +100,7 @@ export default function TaskModal(props) {
   const newTabIndex = useRef(0);
 
   const getUsers = async (searchValue = null) => {
-    await userService.getList(`?search=${searchValue}`).then((result: Response) => {
+    await userService.getList(`?search=${searchValue}&limit=200`).then((result: Response) => {
       setUsers(result.response.data);
     });
   };
@@ -289,6 +289,9 @@ export default function TaskModal(props) {
                             label: `${user.lastName}|${user.firstName}`,
                             value: user.id,
                           }))}
+                          filterOption={(input, option) =>
+                            option.label.toLowerCase().includes(input.toLowerCase())
+                          }
                         />
                       </div>
                     </div>

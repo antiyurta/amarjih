@@ -231,11 +231,7 @@ const Surgery = () => {
       key: 'right',
       render: (_, record: any) => (
         <Space size="middle">
-          {/* {user?.response?.role === 'nurse' ? ( */}
           <a onClick={() => handleClickMenu(record.id, 'change_column')}>Төлөв солих</a>
-          {/* ) : ( */}
-          {/* '' */}
-          {/* )} */}
           <a onClick={() => handleClickMenu(record.id, 'edit')}>Засах</a>
           <a onClick={() => handleClickMenu(record.id, 'delete')}>Устгах</a>
         </Space>
@@ -671,6 +667,7 @@ const Surgery = () => {
                   setChoosedDepId(e);
                 }}
                 allowClear
+                disabled
               >
                 <Option value={0}>Бүх тасаг</Option>
                 {deps.map(item => {

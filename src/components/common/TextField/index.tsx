@@ -11,6 +11,7 @@ interface Props {
   error?: boolean;
   disabled?: boolean;
   errorMessage?: string;
+  require?: boolean;
 }
 
 const TextField: FC<Props> = ({
@@ -24,6 +25,7 @@ const TextField: FC<Props> = ({
   errorMessage,
   onChange,
   disabled,
+  require,
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [showError, setShowError] = useState(error);
@@ -43,7 +45,11 @@ const TextField: FC<Props> = ({
 
   return (
     <div>
-      {label && <div className="block text-sm text-black">{label}</div>}
+      {label && (
+        <div className="flex text-sm text-black">
+          {label} {require ? <div className="text-sm text-red-600 ml-1">*</div> : ''}
+        </div>
+      )}
       <input
         type={type}
         name={name}

@@ -170,37 +170,21 @@ export default function ColumnChangeModal(props) {
                   <div className="text-sm w-40">Үргэжлэх хугацаа</div>
                   <div className="text-sm font-bold">{task?.durationIntTime} минут</div>
                 </div> */}
-                {task?.taskWorkers.map(work => {
-                  return (
-                    <div className="flex flex-col mt-4">
-                      {/* <div className="flex flex-row justify-start items-center">
-                        <div className="text-base w-56 mr-2 font-bold">Бүртгэл</div>
-                      </div> 
-                      <div className="text-sm mt-2">{work.surgery.name}</div> */}
-                      <div className="flex flex-row justify-center items-center">
-                        <div className="text-base w-56 mr-2 font-bold">Эмч нар</div>
-                        <div className="w-full">
-                          <Divider />
-                        </div>
+                <div className="flex flex-row justify-center items-center">
+                  <div className="text-base w-full mr-2 font-bold">Тусламж үйлчилгээний баг</div>
+                  <div className="w-full">
+                    <Divider />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-1">
+                  {task?.taskWorkers.map(work => {
+                    return (
+                      <div className="mb-3 mr-3">
+                        <UserIconRow key={work?.id} data={work.operation} />
                       </div>
-                      <div className="">
-                        <div className="flex flex-row justify-start items-center p-1">
-                          <div className="flex flex-row ">
-                            <div className="mb-3 mr-3">
-                              <UserIconRow data={work.operation} />
-                            </div>
-                            {/* <div className="mb-3 mr-3">
-                              {work.firstHelper ? <UserIconRow data={work.firstHelper} /> : ''}
-                            </div>
-                            <div className="mb-3 mr-3">
-                              {work.secondHelper ? <UserIconRow data={work.secondHelper} /> : ''}
-                            </div> */}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
                 {/* <div className="flex flex-col mt-1">
                   <div className="flex flex-row justify-center items-center">
                     <div className="text-base w-56 mr-2 font-bold">Мэдээгүйжүүлэгч</div>

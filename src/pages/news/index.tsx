@@ -3,7 +3,7 @@ import moment from 'moment';
 
 import { useRouter } from 'next/router';
 
-import { Table, Menu, message } from 'antd';
+import { Table, Menu, message, Space } from 'antd';
 
 import MoreLayout from '@components/layout/more';
 
@@ -18,6 +18,7 @@ import DeleteIcon from '@components/common/icons/delete';
 // service
 import newsService from '@services/news';
 import Image from 'next/image';
+import EditIcon from '@components/common/icons/edit';
 
 interface Response {
   response: any;
@@ -42,6 +43,7 @@ const News = () => {
 
   const handleClickButton = async () => {
     setOpenModal(true);
+    setChoosedId(0);
   };
 
   const handleClickDeleteMenu = async id => {
@@ -57,26 +59,35 @@ const News = () => {
   };
 
   const onFinish = async datas => {
-    const res = await newsService.addNews({
-      ...datas,
-    });
-    message.success('Мэдээ амжилттай нэмэгдлээ.');
+    if (choosedId == 0) {
+      const res: Response = await newsService.addNews({
+        ...datas,
+      });
+      if (res.success) {
+        message.success('Мэдээ амжилттай нэмэгдлээ.');
+      } else {
+        message.error('Мэдээ нэмхэд алдаа гарлаа.');
+        return;
+      }
+    } else {
+      const res: Response = await newsService.editNews(choosedId, datas);
+      if (res.success) {
+        message.success('Мэдээ амжилттай заслаа.');
+      } else {
+        message.error('Мэдээ засхад алдаа гарлаа.');
+        return;
+      }
+    }
     setOpenModal(prev => !prev);
     setReload(prev => !prev);
   };
-
-  const renderMenu = id => {
-    return (
-      <Menu
-        items={[
-          // { key: '1', label: <div>Засах</div> },
-          {
-            key: '2',
-            label: <div onClick={() => handleClickDeleteMenu(id)}>Устгах</div>,
-          },
-        ]}
-      />
-    );
+  const handleClickMenu = async (id, state) => {
+    setChoosedId(id);
+    if (state === 'delete') {
+      handleClickDeleteMenu(prev => !prev);
+    } else if (state === 'edit') {
+      setOpenModal(prev => !prev);
+    }
   };
 
   const columns = [
@@ -105,9 +116,14 @@ const News = () => {
       dataIndex: 'id',
       key: 'id',
       render: id => (
-        <div onClick={() => handleClickDeleteMenu(id)}>
-          <DeleteIcon />
-        </div>
+        <Space size="middle">
+          <div onClick={() => handleClickMenu(id, 'edit')}>
+            <EditIcon />
+          </div>
+          <div onClick={() => handleClickMenu(id, 'delete')}>
+            <DeleteIcon />
+          </div>
+        </Space>
       ),
     },
   ];
@@ -121,6 +137,7 @@ const News = () => {
           setReload(prev => !prev);
         }}
         onFinish={onFinish}
+        itemId={choosedId}
       />
       <ConfirmModal
         isModalVisible={openConfirmModal}

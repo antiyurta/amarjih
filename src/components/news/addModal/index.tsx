@@ -1,5 +1,5 @@
 import { Form, Modal, Radio, message } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // context
 import { useAuthState } from '@context/auth';
@@ -8,18 +8,23 @@ import { useAuthState } from '@context/auth';
 import Button from '@components/common/button';
 import TextArea from '@components/common/textArea';
 import SelectionImage from '../selectionImage/index';
-
+import NewsService from '@services/news';
+interface Response {
+  response: any;
+  success: boolean;
+  message: string;
+}
 export default function AddModal(props) {
   const options = [
     { label: 'Энгийн', value: 'normal' },
     { label: 'Хүүхэд', value: 'child' },
   ];
   const images = [
-    { path: '/assets/images/children/female.png', title: 'Эмэгтэй' },
-    { path: '/assets/images/children/male.png', title: 'Эрэгтэй' },
+    { path: '/assets/images/children/female.png', title: 'Охин' },
+    { path: '/assets/images/children/male.png', title: 'Хүү' },
     { path: '/assets/images/children/twin.png', title: 'Хүү, охин ихэр' },
-    { path: '/assets/images/children/twin-female.png', title: 'Эмэгтэй ихэр' },
-    { path: '/assets/images/children/twin-male.png', title: 'Эрэгтэй ихэр' },
+    { path: '/assets/images/children/twin-female.png', title: 'Охин ихэр' },
+    { path: '/assets/images/children/twin-male.png', title: 'Хүү ихэр' },
   ];
   const { user } = useAuthState();
   const [type, setType] = useState('child');
@@ -45,6 +50,19 @@ export default function AddModal(props) {
     });
   };
 
+  useEffect(() => {
+    if (props.itemId === 0) {
+      setType('child');
+      setCurrent('');
+      setDescription('');
+    } else {
+      NewsService.getOne(props.itemId).then((result: Response) => {
+        setType(result.response?.type);
+        setCurrent(result.response?.path);
+        setDescription(result.response?.description);
+      });
+    }
+  }, [props.itemId]);
   return (
     <Modal
       open={props.isModalVisible}
@@ -60,7 +78,9 @@ export default function AddModal(props) {
           </div>
         </div>
       }
-      title={<div className="font-bold text-xl">МЭДЭЭ НЭМЭХ</div>}
+      title={
+        <div className="font-bold text-xl">{props.itemId > 0 ? 'МЭДЭЭ ЗАСАХ' : 'МЭДЭЭ НЭМЭХ'}</div>
+      }
     >
       <div className="sm:pt-3 pb-2 sm:pb-5">
         <Form name="addRoomModal" onFinish={onFinish}>

@@ -242,11 +242,17 @@ export default function UserModal(props) {
                     <TextField
                       label="Эцэг/Эхийн нэр"
                       value={lastName}
+                      require={true}
                       onChange={e => setLastName(e)}
                     />
                   </div>
                   <div className="mb-2">
-                    <TextField label="Нэр" value={firstName} onChange={e => setFirstName(e)} />
+                    <TextField
+                      label="Нэр"
+                      value={firstName}
+                      onChange={e => setFirstName(e)}
+                      require={true}
+                    />
                   </div>
                   <div className="mb-2">
                     <TextField value={phone} label="Утасны дугаар" onChange={e => setPhone(e)} />
@@ -260,6 +266,7 @@ export default function UserModal(props) {
                       items={deps}
                       value={choosedDep}
                       onChange={handleDepChange}
+                      require={true}
                     />
                   </div>
                   <div className="mb-2">

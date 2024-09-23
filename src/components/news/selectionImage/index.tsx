@@ -12,7 +12,7 @@ interface ImageProps {
 const SelectionImage: FC<ImageProps> = ({ path, title, isSelect, width, onClick }) => {
   return (
     <div
-      className={`flex flex-col justify-center m-10 items-center ${isSelect ? 'border-2 border-blue-500' : ''}`}
+      className={`flex flex-col justify-center m-10 items-center ${isSelect ? 'border-8 border-blue-500' : ''}`}
     >
       <Card
         hoverable

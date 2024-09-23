@@ -89,11 +89,9 @@ const Dashboard = () => {
   const [today, setDate] = useState(moment());
   const [choosedNewsIndex, setChoosedNewsIndex] = useState(0);
   const [childNews, setChildNews] = useState([]);
-  const [news, setNews] = useState([]);
   const currentPageNumber = useRef(1);
   const totalPageCount = useRef(0);
   const pageRenderRowCount = 10;
-  const currentNewsPageNumber = useRef(1);
   const totalNewsPageCount = useRef(0);
 
   const loadData = async () => {
@@ -106,24 +104,15 @@ const Dashboard = () => {
     );
   };
 
-  const loadNewsData = () => {
-    newsService.getList({ page: 1, limit: 10, type: 'normal' }).then((result: Response) => {
-      setNews(result?.response?.data);
-      totalNewsPageCount.current = result?.response?.meta?.itemCount;
-      setChoosedNewsIndex(0);
-    });
-  };
   const loadChildNewsData = () => {
     newsService.getList({ page: 1, limit: 10, type: 'child' }).then((result: Response) => {
       setChildNews(result?.response?.data);
       totalNewsPageCount.current = result?.response?.meta?.itemCount;
-      setChoosedNewsIndex(0);
     });
   };
 
   useEffect(() => {
     loadData();
-    loadNewsData();
     loadChildNewsData();
     socket.on('dashboard', function (data) {
       console.log('socket.on dashboard');
@@ -131,7 +120,7 @@ const Dashboard = () => {
     });
     socket.on('news', function (data) {
       console.log('socket.on news');
-      loadNewsData();
+      loadChildNewsData();
     });
   }, []);
 
@@ -155,7 +144,7 @@ const Dashboard = () => {
       render: position => <span className="font-bold">{position}</span>,
     },
     {
-      title: <b>Овог/ Нэр</b>,
+      title: <b>Нэр/Овог</b>,
       dataIndex: 'firstName',
       key: 'firstName',
       render: (_, record: any) => {
@@ -229,13 +218,13 @@ const Dashboard = () => {
     },
     {
       title: <b>Дууссан цаг</b>,
-      dataIndex: 'updatedAt',
-      key: 'updatedAt',
+      dataIndex: 'endDate',
+      key: 'endDate',
       width: 50,
-      render: updatedAt => {
+      render: endDate => {
         return (
           <div className="flex items-center">
-            <span className="text-xl font-bold">{moment(updatedAt).format('HH:mm')}</span>
+            <span className="text-xl font-bold">{moment(endDate).format('HH:mm')}</span>
           </div>
         );
       },
@@ -269,7 +258,7 @@ const Dashboard = () => {
       <div className="h-screen p-2">
         <div className={`border rounded px-3 bg-input py-4 mb-3 flex justify-between items-center`}>
           <Logo />
-          <div className="text-secondary text-2xl font-bold">{today.format('YYYY/MM/DD')}</div>
+          <div className="text-secondary text-3xl font-bold">{today.format('YYYY/MM/DD')}</div>
         </div>
         <div className="flex gap-1 w-full h-full">
           <div className="w-5/12 h-full">
