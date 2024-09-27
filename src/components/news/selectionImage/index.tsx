@@ -1,7 +1,6 @@
 import { Card } from 'antd';
 import { FC } from 'react';
 import styles from './SelectionImage.module.css';
-
 interface ImageProps {
   path: string;
   title: string;
@@ -9,7 +8,8 @@ interface ImageProps {
   width?: number;
   onClick?: () => void;
 }
-const SelectionImage: FC<ImageProps> = ({ path, title, isSelect, width, onClick }) => {
+
+export const ImageCard: FC<ImageProps> = ({ path, title, isSelect, width, onClick }) => {
   return (
     <Card
       hoverable
@@ -25,4 +25,13 @@ const SelectionImage: FC<ImageProps> = ({ path, title, isSelect, width, onClick 
     ></Card>
   );
 };
-export default SelectionImage;
+
+export const SelectionImage: FC<ImageProps> = ({ path, title, isSelect, width, onClick }) => {
+  return (
+    <div
+      className={`flex flex-col justify-center m-10 items-center ${isSelect ? 'border-8 border-blue-500' : ''}`}
+    >
+      <ImageCard path={path} title={title} isSelect={isSelect} width={width} onClick={onClick} />
+    </div>
+  );
+};

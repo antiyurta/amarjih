@@ -7,7 +7,7 @@ import { useAuthState } from '@context/auth';
 // components
 import Button from '@components/common/button';
 import TextArea from '@components/common/textArea';
-import SelectionImage from '../selectionImage/index';
+import { SelectionImage } from '../selectionImage/index';
 import NewsService from '@services/news';
 interface Response {
   response: any;

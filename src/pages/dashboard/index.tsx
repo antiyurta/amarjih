@@ -26,7 +26,7 @@ import nameFormatter from '@utils/NameFomatter';
 
 // styled
 import ContentWrapper from './style';
-import SelectionImage from '@components/news/selectionImage/index';
+import { ImageCard } from '@components/news/selectionImage/index';
 
 interface DoctorsType {
   id?: number;
@@ -105,10 +105,17 @@ const Dashboard = () => {
   };
 
   const loadChildNewsData = () => {
-    newsService.getList({ page: 1, limit: 10, type: 'child' }).then((result: Response) => {
-      setChildNews(result?.response?.data);
-      totalNewsPageCount.current = result?.response?.meta?.itemCount;
-    });
+    newsService
+      .getList({
+        page: 1,
+        limit: 10,
+        type: 'child',
+        filterAt: moment(new Date()).format('YYYY-MM-DD'),
+      })
+      .then((result: Response) => {
+        setChildNews(result?.response?.data);
+        totalNewsPageCount.current = result?.response?.meta?.itemCount;
+      });
   };
 
   useEffect(() => {
@@ -262,11 +269,10 @@ const Dashboard = () => {
         </div>
         <div className="flex flex-row gap-2 w-full">
           <div className="w-1/3 h-full">
-            {/* autoplay autoplaySpeed={10000} */}
-            <Carousel>
+            <Carousel autoplay autoplaySpeed={15000}>
               {childNews.map((item, key) => (
                 <div key={key}>
-                  <SelectionImage path={item?.path} title={item?.description} isSelect={false} />
+                  <ImageCard path={item?.path} title={item?.description} isSelect={false} />
                 </div>
               ))}
             </Carousel>

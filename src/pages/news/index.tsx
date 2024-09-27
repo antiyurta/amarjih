@@ -84,7 +84,7 @@ const News = () => {
   const handleClickMenu = async (id, state) => {
     setChoosedId(id);
     if (state === 'delete') {
-      handleClickDeleteMenu(prev => !prev);
+      handleClickDeleteMenu(id);
     } else if (state === 'edit') {
       setOpenModal(prev => !prev);
     }
