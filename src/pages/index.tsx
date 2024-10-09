@@ -85,7 +85,11 @@ const Index = () => {
         await AuthTokenStorageService.store(res?.response?.accessToken);
         await setLogin(res?.response?.accessToken);
         setLoginError(null);
-        router.push('/tasks');
+        if (user?.response?.role == 'admin' || user?.response?.role == 'nurse') {
+          router.push('tasks');
+          return;
+        }
+        router.push('/news');
       } else {
         setButtonLoader(false);
         setLoginError('error');
