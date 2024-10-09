@@ -227,13 +227,14 @@ const Dashboard = () => {
       dataIndex: 'endDate',
       key: 'endDate',
       width: 50,
-      render: endDate => {
-        return (
+      render: endDate =>
+        endDate ? (
           <div className="flex items-center">
             <span className="text-xl font-bold">{moment(endDate).format('HH:mm')}</span>
           </div>
-        );
-      },
+        ) : (
+          '?'
+        ),
     },
     // {
     //   title: <b>Үргэлжилсэн хугацаа</b>,
