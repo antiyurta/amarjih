@@ -97,11 +97,7 @@ const Dashboard = () => {
   const loadData = async () => {
     const result: any = await taskService.getStatList();
     setTasks(result?.data?.response);
-    totalPageCount.current = Math.ceil(
-      result?.data?.response?.filter(
-        res => res.currentColumn?.columnId > 1 && res.currentColumn?.columnId < 14
-      ).length / pageRenderRowCount
-    );
+    totalPageCount.current = Math.ceil(result?.data?.response?.length / pageRenderRowCount);
   };
 
   const loadChildNewsData = () => {
@@ -133,7 +129,7 @@ const Dashboard = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       const nextPage =
-        totalPageCount.current === currentPageNumber.current ? 1 : currentPageNumber.current + 1;
+        totalPageCount.current <= currentPageNumber.current ? 1 : currentPageNumber.current + 1;
       currentPageNumber.current = nextPage;
       setChoosedNewsIndex(prev => prev + 1);
     }, 8000);
@@ -245,21 +241,6 @@ const Dashboard = () => {
     //   ),
     // },
   ];
-  const newsColumns: ColumnsType<DataType> = [
-    {
-      title: <b>МЭДЭЭЛЭЛ</b>,
-      dataIndex: 'description',
-      key: 'description',
-      width: 'auto',
-      render: description => {
-        return (
-          <div className="flex items-center">
-            <span className="text-xl">{description}</span>
-          </div>
-        );
-      },
-    },
-  ];
   return (
     <MainLayout>
       <div className="h-screen p-2">
@@ -269,7 +250,7 @@ const Dashboard = () => {
         </div>
         <div className="flex flex-row gap-2 w-full">
           <div className="w-1/3 h-full">
-            <Carousel autoplay autoplaySpeed={15000}>
+            <Carousel autoplay autoplaySpeed={8000}>
               {childNews.map((item, key) => (
                 <div key={key}>
                   <ImageCard path={item?.path} title={item?.description} isSelect={false} />

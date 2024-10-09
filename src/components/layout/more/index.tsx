@@ -46,7 +46,9 @@ const setMenu = [
     title: 'Мэдээлэл',
   },
 ];
+const adminMenus = ['tasks', 'dashboard', 'users', 'settings', 'news'];
 const nurseMenus = ['tasks', 'dashboard', 'news'];
+const operatorMenus = ['news'];
 interface Props {
   children?: any;
 }
@@ -112,29 +114,26 @@ const MoreLayout: React.FC<Props> = ({ children }) => {
             <Divider dashed />
             <div>
               <Profile {...user.response} />
-              {user?.response?.role == 'admin'
-                ? menus.map((item, ind) => {
-                    return (
-                      <MenuButton
-                        key={ind}
-                        {...item}
-                        choosed={`/${item.link}` === choosedMenu}
-                        onClick={() => handleMenuClick(item.link)}
-                      />
-                    );
-                  })
-                : menus
-                    .filter(item => nurseMenus.includes(item.link))
-                    .map((item, ind) => {
-                      return (
-                        <MenuButton
-                          key={ind}
-                          {...item}
-                          choosed={`/${item.link}` === choosedMenu}
-                          onClick={() => handleMenuClick(item.link)}
-                        />
-                      );
-                    })}
+              {menus
+                .filter(item => {
+                  if (user?.response?.role == 'admin') {
+                    return adminMenus.includes(item.link);
+                  } else if (user?.response?.role == 'nurse') {
+                    return nurseMenus.includes(item.link);
+                  } else {
+                    return operatorMenus.includes(item.link);
+                  }
+                })
+                .map((item, ind) => {
+                  return (
+                    <MenuButton
+                      key={ind}
+                      {...item}
+                      choosed={`/${item.link}` === choosedMenu}
+                      onClick={() => handleMenuClick(item.link)}
+                    />
+                  );
+                })}
             </div>
           </div>
           <div className="mb-2">
