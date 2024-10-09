@@ -251,8 +251,9 @@ const Dashboard = () => {
         <div className="flex flex-row gap-2 w-full">
           <div className="w-1/3 h-full">
             <Carousel autoplay autoplaySpeed={8000}>
-              {childNews.map((item, key) => (
-                <div key={key}>
+              {childNews.map(item => (
+                <div key={item?.id}>
+                  {item?.id}
                   <ImageCard path={item?.path} title={item?.description} isSelect={false} />
                 </div>
               ))}
