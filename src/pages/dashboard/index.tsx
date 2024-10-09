@@ -110,7 +110,6 @@ const Dashboard = () => {
         page: 1,
         limit: 10,
         type: 'child',
-        filterAt: moment(new Date()).format('YYYY-MM-DD'),
       })
       .then((result: Response) => {
         setChildNews(result?.response?.data);
