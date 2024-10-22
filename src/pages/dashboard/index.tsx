@@ -253,7 +253,6 @@ const Dashboard = () => {
             <Carousel autoplay autoplaySpeed={8000}>
               {childNews.map(item => (
                 <div key={item?.id}>
-                  {item?.id}
                   <ImageCard path={item?.path} title={item?.description} isSelect={false} />
                 </div>
               ))}
