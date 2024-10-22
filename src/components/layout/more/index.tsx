@@ -47,7 +47,7 @@ const setMenu = [
   },
 ];
 const adminMenus = ['tasks', 'dashboard', 'users', 'settings', 'news'];
-const nurseMenus = ['tasks', 'dashboard', 'news'];
+const nurseMenus = ['tasks'];
 const operatorMenus = ['news'];
 interface Props {
   children?: any;

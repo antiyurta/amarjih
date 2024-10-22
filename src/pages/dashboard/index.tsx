@@ -258,7 +258,7 @@ const Dashboard = () => {
               ))}
             </Carousel>
           </div>
-          <div className="w-2/3">
+          <div className="w-full">
             <ContentWrapper>
               <Table
                 columns={columns}
