@@ -85,11 +85,6 @@ const Index = () => {
         await AuthTokenStorageService.store(res?.response?.accessToken);
         await setLogin(res?.response?.accessToken);
         setLoginError(null);
-        if (user?.response?.role == 'admin' || user?.response?.role == 'nurse') {
-          router.push('tasks');
-          return;
-        }
-        router.push('/news');
       } else {
         setButtonLoader(false);
         setLoginError('error');
@@ -100,6 +95,16 @@ const Index = () => {
     }
   };
 
+  useEffect(() => {
+    if (user) {
+      if (user?.response?.role == 'admin' || user?.response?.role == 'nurse') {
+        router.push('tasks');
+        return;
+      } else {
+        router.push('/news');
+      }
+    }
+  }, [user]);
   return (
     <Layout>
       <div className="h-screen flex justify-center items-center bg-login-image bg-cover bg-center">

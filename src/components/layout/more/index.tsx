@@ -21,11 +21,6 @@ const setMenu = [
     title: 'Бүртгэл',
   },
   {
-    link: 'dashboard',
-    icon: BarChartOutlined,
-    title: 'Хянах самбар',
-  },
-  {
     link: 'users',
     icon: UserOutlined,
     title: 'Хүний нөөц',
@@ -45,10 +40,15 @@ const setMenu = [
     icon: ShopOutlined,
     title: 'Мэдээлэл',
   },
+  {
+    link: 'dashboard',
+    icon: BarChartOutlined,
+    title: 'Хянах самбар',
+  },
 ];
 const adminMenus = ['tasks', 'dashboard', 'users', 'settings', 'news'];
-const nurseMenus = ['tasks'];
-const operatorMenus = ['news'];
+const nurseMenus = ['tasks', 'dashboard'];
+const operatorMenus = ['news', 'dashboard'];
 interface Props {
   children?: any;
 }
@@ -68,7 +68,7 @@ const MoreLayout: React.FC<Props> = ({ children }) => {
   };
 
   const handleLogouButtonClick = async () => {
-    await setLogout();
+    setLogout();
     router.push('/');
     return;
   };
