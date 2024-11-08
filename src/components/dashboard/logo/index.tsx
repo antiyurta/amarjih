@@ -13,13 +13,13 @@ const Logo: FC<Props> = ({ logoPath }) => {
       <div className="mr-1">
         <Image src={logoPath} alt="avatar" width={80} height={44} />
       </div>
-      <div className="text-secondary font-bold text-3xl ">НИЙСЛЭЛИЙН АМГАЛАН АМАРЖИХ ГАЗАР</div>
+      <div className="text-secondary font-bold text-3xl ">НАЛАЙХ ЭРҮҮЛ МЭНДИЙН ТӨВ</div>
     </div>
   );
 };
 
 Logo.defaultProps = {
-  logoPath: '/assets/icon.png',
+  logoPath: '/assets/nalaikh.png',
 };
 
 export default memo(Logo, (prev, next) => prev.logoPath === next.logoPath);
