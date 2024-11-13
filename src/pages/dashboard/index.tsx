@@ -115,7 +115,6 @@ const Dashboard = () => {
 
   useEffect(() => {
     loadData();
-    loadChildNewsData();
     socket.on('dashboard', function (data) {
       console.log('socket.on dashboard');
       loadData();

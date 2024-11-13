@@ -148,48 +148,6 @@ const Surgery = () => {
       dataIndex: 'lastName',
       key: 'lastName',
     },
-    // {
-    //   title: 'Нас / Хүйс',
-    //   dataIndex: 'registerNumber',
-    //   key: 'registerNumber',
-    //   render: (_, record: any) => {
-    //     return (
-    //       <div className="flex flex-row items-center">
-    //         <span className="text-sm">{record.currentAge}</span>
-    //         <span className="ml-1"> /</span>
-    //         <span className="text-sm ml-1">{RegisterParser(record.registerNumber).gender}</span>
-    //       </div>
-    //     );
-    //   },
-    // },
-    // {
-    //   title: 'Бүртгэл',
-    //   dataIndex: 'surgery',
-    //   key: 'surgery',
-    //   render: (_, record: any) => {
-    //     return (
-    //       <div className="flex flex-row items-center">
-    //         <span className="text-sm line-clamp-2">{record?.taskWorkers[0]?.surgery.name}</span>
-    //       </div>
-    //     );
-    //   },
-    // },
-    // {
-    //   title: 'Хугацаа',
-    //   dataIndex: 'durationTime',
-    //   key: 'durationTime',
-    //   render: (_, record: any) => {
-    //     return (
-    //       <div className="flex flex-row items-center">
-    //         <span className="text-sm">
-    //           {timeFormatter(
-    //             record?.durationWorkTime ? record?.durationWorkTime : record.durationIntTime
-    //           )}
-    //         </span>
-    //       </div>
-    //     );
-    //   },
-    // },
     {
       title: 'Өрөө',
       dataIndex: 'room',
